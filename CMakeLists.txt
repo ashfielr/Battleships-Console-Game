@@ -19,3 +19,9 @@ add_library(
 	grid.h
 	grid.cpp
 )
+
+add_library(
+	gridLocation
+	gridLocation.h
+	gridLocation.cpp
+)
