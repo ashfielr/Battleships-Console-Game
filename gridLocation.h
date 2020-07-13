@@ -1,5 +1,5 @@
-#ifndef HEADERFILE_H
-#define HEADERFILE_H
+#ifndef GRIDLOCATION_H
+#define GRIDLOCATION_H
 
 #include <array>
 using namespace std;

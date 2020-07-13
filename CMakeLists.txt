@@ -25,3 +25,11 @@ add_library(
 	gridLocation.h
 	gridLocation.cpp
 )
+
+add_library(
+	ship
+	ship.h
+	ship.cpp
+)
+
+target_link_libraries(ship gridLocation)

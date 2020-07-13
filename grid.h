@@ -1,5 +1,5 @@
-#ifndef HEADERFILE_H
-#define HEADERFILE_H
+#ifndef GRID_H
+#define GRID_H
 
 #include <array>
 using namespace std;
