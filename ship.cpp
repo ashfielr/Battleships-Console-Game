@@ -1,8 +1,5 @@
 using namespace std;
 
-//GridLocation library
-#include "gridLocation.h"
-
 //Ship library to be implemented
 #include "ship.h"
 

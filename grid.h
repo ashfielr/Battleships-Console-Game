@@ -2,7 +2,7 @@
 #define GRID_H
 
 #include <array>
-using namespace std;
+#include <memory>
 
 class Grid
 {
@@ -16,15 +16,15 @@ class Grid
         // The grid of characters
         // 2D Array in structure of an array of rows where each row is an array of the cell in the row 
         // [[Row1], [Row2], etc]
-        array<shared_ptr<array<char,10>>,10> grid;
+        std::array<std::shared_ptr<std::array<char,10>>,10> grid;
     
     public:
         Grid();
 
         /* Getter for @grid */
-        array<shared_ptr<array<char,10>>,10>  getGrid();
+        std::array<std::shared_ptr<std::array<char,10>>,10>  getGrid();
 
         /* Setter for @grid */
-        void setGrid(array<shared_ptr<array<char,10>>,10> grid);
+        void setGrid(std::array<std::shared_ptr<std::array<char,10>>,10> grid);
 };
 #endif
