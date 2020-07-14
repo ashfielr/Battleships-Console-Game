@@ -32,4 +32,12 @@ add_library(
 	ship.cpp
 )
 
+add_library(
+	player
+	player.h
+	player.cpp
+)
+
 target_link_libraries(ship gridLocation)
+
+target_link_libraries(player gridLocation ship grid)
