@@ -22,7 +22,7 @@ Grid::Grid() : length(10), height(10)
 }
 
 /* Getter for @grid */
-array<shared_ptr<array<char,10>>,10> Grid::getGrid()
+array<shared_ptr<array<char,10>>,10> Grid::getGrid() const
 {
     return grid;
 }

@@ -18,13 +18,16 @@ class TextInterface
         std::shared_ptr<TextInterface> getInstance();
     
         /* Show the a grid on the screen */
+        /* @grid is passed as a const reference to stop copying */
         void display(const Grid& grid);
         
         /* Show text on the screen */
+        /* @text is passed as a const reference to stop copying */
         void display(const std::string& text);
         
         /* Ask user for input with a message */
         /* Returns the user's response */
+        /* @inputMessage is passed as a const reference to stop copying */
         std::string receiveInput(const std::string& inputMessage);
         
 };

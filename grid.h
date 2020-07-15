@@ -22,7 +22,7 @@ class Grid
         Grid();
 
         /* Getter for @grid */
-        std::array<std::shared_ptr<std::array<char,10>>,10>  getGrid();
+        std::array<std::shared_ptr<std::array<char,10>>,10>  getGrid() const;
 
         /* Setter for @grid */
         void setGrid(std::array<std::shared_ptr<std::array<char,10>>,10> grid);
