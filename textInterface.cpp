@@ -13,7 +13,7 @@ std::shared_ptr<TextInterface> TextInterface::getInstance()
 }
 
 /* Show the a grid on the screen */
-void TextInterface::display(Grid grid)
+void TextInterface::display(const Grid& grid)
 {
     cout << "[   ] | [ 0 ] [ 1 ] [ 2 ] [ 3 ] [ 4 ] [ 5 ] [ 6 ] [ 7 ] [ 8 ] [ 9 ]" << endl;
     cout << "-------------------------------------------------------------------" << endl;
@@ -29,14 +29,14 @@ void TextInterface::display(Grid grid)
 }
 
 /* Show text on the screen */
-void TextInterface::display(std::string text)
+void TextInterface::display(const std::string& text)
 {
     cout << text << endl;
 }
 
 /* Ask user for input with a message */
 /* Returns the user's response */
-std::string TextInterface::receiveInput(std::string inputMessage)
+std::string TextInterface::receiveInput(const std::string& inputMessage)
 {
     cout << inputMessage;
     std::string inputFromUser;

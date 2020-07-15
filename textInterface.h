@@ -18,14 +18,14 @@ class TextInterface
         std::shared_ptr<TextInterface> getInstance();
     
         /* Show the a grid on the screen */
-        void display(Grid grid);
+        void display(const Grid& grid);
         
         /* Show text on the screen */
-        void display(std::string text);
+        void display(const std::string& text);
         
         /* Ask user for input with a message */
         /* Returns the user's response */
-        std::string receiveInput(std::string inputMessage);
+        std::string receiveInput(const std::string& inputMessage);
         
 };
 #endif
