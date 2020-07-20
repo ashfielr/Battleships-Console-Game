@@ -21,12 +21,6 @@ add_library(
 )
 
 add_library(
-	gridLocation
-	gridLocation.h
-	gridLocation.cpp
-)
-
-add_library(
 	ship
 	ship.h
 	ship.cpp

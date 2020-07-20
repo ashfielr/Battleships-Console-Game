@@ -23,7 +23,7 @@ class Player
         Grid enemyGrid;
         
         // Collection of the locations on the grid the player has already used a turn to shoot at
-        vector<GridLocation> gridLocationsShotAt;
+        vector<std::pair<int,int>> gridLocationsShotAt;
         
         // BattlePlayerRole role; --> To be implemented
         
