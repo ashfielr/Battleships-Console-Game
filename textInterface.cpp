@@ -23,7 +23,7 @@ void TextInterface::display(const Grid& grid)
         
         for(int col=0; col<10; col++)
         {
-            cout << " [ " << grid.getGrid()[row]->at(col) << " ]" << endl;
+            cout << " [ " << grid.getGrid()[row][col] << " ]" << endl;
         }
     }
 }

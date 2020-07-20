@@ -16,19 +16,18 @@ Grid::Grid() : length(10), height(10)
         {
             rowArray[column] = ' ';
         }
-        shared_ptr<array<char,10>> rowArrayPtr= make_shared<array<char,10>>();
-        grid[row] = rowArrayPtr;
+        grid[row] = rowArray;
     }
 }
 
 /* Getter for @grid */
-array<shared_ptr<array<char,10>>,10> Grid::getGrid() const
+array<array<char,10>,10> Grid::getGrid() const
 {
     return grid;
 }
 
 /* Setter for @grid */
-void Grid::setGrid(array<shared_ptr<array<char,10>>,10> _grid)
+void Grid::setGrid(array<array<char,10>,10> _grid)
 {
     grid = _grid;
 }
