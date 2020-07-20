@@ -4,14 +4,6 @@ using namespace std;
 
 #include <iostream>
 
-/* The Singleton instance of the class */
-std::shared_ptr<TextInterface> TextInterface::getInstance()
-{
-    if(instance == NULL)
-        instance = make_shared<TextInterface>(TextInterface());
-    return instance;
-}
-
 /* Show the a grid on the screen */
 void TextInterface::display(const Grid& grid)
 {
@@ -35,11 +27,12 @@ void TextInterface::display(const std::string& text)
 }
 
 /* Ask user for input with a message */
-/* Returns the user's response */
-std::string TextInterface::receiveInput(const std::string& inputMessage)
+/* Returns the user's response as required datatype specified by @returnType parameter */
+template<typename TYPE>
+TYPE TextInterface::receiveInput(const std::string& inputMessage, TYPE paramOfTypeToReturn)
 {
     cout << inputMessage;
-    std::string inputFromUser;
+    TYPE inputFromUser;
     cin >> inputFromUser;
     return inputFromUser;
 }
