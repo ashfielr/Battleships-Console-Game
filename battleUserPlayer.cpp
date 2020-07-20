@@ -16,6 +16,71 @@ std::pair<int,int> BattleUserPlayer::takeTurn()
     return gridLocationToFireAt;
 }
 
+/* Start @startLocation and end @endLocation locations are passed along with the size of the ship */
+/* The function returns a vector of the ship locations that make up the ship that spans from the start location to the end location provided */
+std::vector<std::pair<int,int>> getShipLocations(const std::pair<int,int>& startLocation, const std::pair<int,int>& endLocation, int size)
+{
+    std::vector<std::pair<int,int>> potentialShipLocations;
+    
+    int startCol = std::get<0>(startLocation);
+    int startRow = std::get<1>(startLocation);
+    int endCol = std::get<0>(endLocation);
+    int endRow = std::get<1>(endLocation);
+    
+    if(startCol == endCol)
+    {
+        if(endRow - startRow < 0) // The ship is place vertically down from start location
+        {
+            //Adding the ship locations to vector
+            potentialShipLocations.emplace_back(startLocation);
+            for(int i=1; i<size-1; i++)
+            {
+                std::pair<int,int> location = std::make_pair(startCol, startRow+i);
+                potentialShipLocations.emplace_back(location);
+            }
+            potentialShipLocations.emplace_back(endLocation);
+        }
+        else // The ship is placed vertically above from start location
+        {
+            //Adding the ship locations to vector
+            potentialShipLocations.emplace_back(startLocation);
+            for(int i=1; i<size-1; i++)
+            {
+                std::pair<int,int> location = std::make_pair(startCol, startRow-i);
+                potentialShipLocations.emplace_back(location);
+            }
+            potentialShipLocations.emplace_back(endLocation);
+        }
+    }
+    else if(startRow == endRow)
+    {
+        if(startCol - endCol < 0) // The ship is place horizontally to the right from start location
+        {
+            //Adding the ship locations to vector
+            potentialShipLocations.emplace_back(startLocation);
+            for(int i=1; i<size-1; i++)
+            {
+                std::pair<int,int> location = std::make_pair(startCol+i, startRow);
+                potentialShipLocations.emplace_back(location);
+            }
+            potentialShipLocations.emplace_back(endLocation);
+        }
+        else // The ship is place horizontally to the left from start location
+        {
+            //Adding the ship locations to vector
+            potentialShipLocations.emplace_back(startLocation);
+            for(int i=1; i<size-1; i++)
+            {
+                std::pair<int,int> location = std::make_pair(startCol-i, startRow);
+                potentialShipLocations.emplace_back(location);
+            }
+            potentialShipLocations.emplace_back(endLocation);
+        }
+    }
+    return potentialShipLocations;
+}
+
+
 /* Deals with placing a ship on the player's grid */ 
 std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
 {
