@@ -2,15 +2,17 @@
 #define BATTLEUSERPLAYER_H
 
 #include "iBattlePlayerRole.h"
+#include<vector>
+#include<utility>
 
 /* Class with functionality for a user player (human) to play their role as a player */
-class BattleUserPlayer : public IBattleUserPlayer
+class BattleUserPlayer : public IBattlePlayerRole
 {
     public:
         /* All of the necessary actions are carried out for the player's turn to be completed */
-        GridLocation takeTurn();
+        std::pair<int,int> takeTurn() override;
         
         /* Deals with placing a ship on the player's grid */ 
-        void placeShip(int size);
+        std::vector<std::pair<int,int>> placeShip(int size) override;
 };
 #endif

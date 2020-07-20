@@ -38,6 +38,14 @@ add_library(
 	textInterface.cpp
 )
 
+add_library(
+	battleUserPlayer
+	battleUserPlayer.h
+	battleUserPlayer.cpp
+)
+
 target_link_libraries(ship gridLocation)
 
 target_link_libraries(player gridLocation ship grid)
+
+target_link_libraries(battleUserPlayer textInterface)
