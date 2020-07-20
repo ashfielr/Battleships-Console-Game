@@ -3,6 +3,23 @@
 
 #include <vector>
 
+/* Constructor - passing smart pointer to the player in which this instance is within */
+BattleUserPlayer::BattleUserPlayer(const Player* _playerPtr)
+{
+    playerPtr = _playerPtr;
+}
+
+/* Destructor - freeing memory */
+BattleUserPlayer::~BattleUserPlayer()
+{
+    delete playerPtr;
+}
+
+/* Returns the raw pointer to the Player object in which this instance is found */
+const Player* BattleUserPlayer::getPlayerPtr()
+{
+    return playerPtr;
+}
 
 /* Request the user for a location that they want to use their turn to fire at */
 /* Returns the grid location the user chose to fire at */
@@ -44,10 +61,12 @@ std::vector<std::pair<int,int>> getShipLocations(const std::pair<int,int>& start
         {
             //Adding the ship locations to vector
             potentialShipLocations.emplace_back(startLocation);
-            for(int i=1; i<size-1; i++)
+            int i=1;
+            while(i<size-1)
             {
                 std::pair<int,int> location = std::make_pair(startCol, startRow-i);
                 potentialShipLocations.emplace_back(location);
+                i++;
             }
             potentialShipLocations.emplace_back(endLocation);
         }
@@ -69,10 +88,12 @@ std::vector<std::pair<int,int>> getShipLocations(const std::pair<int,int>& start
         {
             //Adding the ship locations to vector
             potentialShipLocations.emplace_back(startLocation);
-            for(int i=1; i<size-1; i++)
+            int i=1;
+            while(i<size-1)
             {
                 std::pair<int,int> location = std::make_pair(startCol-i, startRow);
                 potentialShipLocations.emplace_back(location);
+                i++;
             }
             potentialShipLocations.emplace_back(endLocation);
         }

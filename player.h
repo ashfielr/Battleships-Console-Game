@@ -6,6 +6,7 @@
 
 #include "grid.h" // Grid library
 #include "ship.h" // Ship library
+#include "iBattlePlayerRole.h" 
 
 class Player
 {
@@ -14,7 +15,7 @@ class Player
         std::string name;
         
         // The Ships that the user owns
-        vector<Ship> ships;
+        std::vector<Ship> ships;
         
         // The player's own grid on which their ships are located and status from enemy shots are displayed
         Grid playerGrid;
@@ -23,17 +24,21 @@ class Player
         Grid enemyGrid;
         
         // Collection of the locations on the grid the player has already used a turn to shoot at
-        vector<std::pair<int,int>> gridLocationsShotAt;
+        std::vector<std::pair<int,int>> gridLocationsShotAt;
         
-        // BattlePlayerRole role; --> To be implemented
+        // The role the player will play - the player will either play the role of a user or a computer
+        IBattlePlayerRole* role;
         
     
     public:
         /* Constructor */
-        Player(std::string _name);
+        Player(std::string _name, bool isAUser);
+        
+        /* Destructor - free up memory */
+        ~Player();
     
         /* Returns the player's name */
-        string getName();
+        std::string getName();
         
         /* Allows the player's name to be changed */
         void setName(std::string _name);
