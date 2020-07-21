@@ -125,26 +125,27 @@ void addToEndingLocationsIfValid(Player* playerPtr, std::pair<int,int>& startLoc
             if(!shipIsConflicting) 
                  availableEndLocations.push_back(endLocation);
         }
-    }                    
-    else if(columnOrRowChanged == 'R')
-    {
-        std::pair<int,int> endLocation = std::make_pair(std::get<0>(startLocation),valueChanged); // End location of the ship
-
-        std::vector<std::pair<int,int>> potentialShipLocations = getShipLocations(startLocation, endLocation, size); // Locations of the potential ship
-
-        // CHECK if conflicting with a ship already placed
-        bool shipIsConflicting = false;
-        for(std::vector<Ship>::iterator shipIter = playerPtr->ships.begin(); shipIter!=playerPtr->ships.end(); std::next(shipIter))
+        else if(columnOrRowChanged == 'R')
         {
-            for(std::vector<std::pair<int,int>>::iterator potentialLocationsIter = potentialShipLocations.begin(); potentialLocationsIter!=potentialShipLocations.end(); std::next(potentialLocationsIter) )
+            std::pair<int,int> endLocation = std::make_pair(std::get<0>(startLocation),valueChanged); // End location of the ship
+
+            std::vector<std::pair<int,int>> potentialShipLocations = getShipLocations(startLocation, endLocation, size); // Locations of the potential ship
+
+            // CHECK if conflicting with a ship already placed
+            bool shipIsConflicting = false;
+            for(std::vector<Ship>::iterator shipIter = playerPtr->ships.begin(); shipIter!=playerPtr->ships.end(); std::next(shipIter))
             {
-                if(shipIter->isLocationOfShip(*potentialLocationsIter))
-                    shipIsConflicting = true;
+                for(std::vector<std::pair<int,int>>::iterator potentialLocationsIter = potentialShipLocations.begin(); potentialLocationsIter!=potentialShipLocations.end(); std::next(potentialLocationsIter) )
+                {
+                    if(shipIter->isLocationOfShip(*potentialLocationsIter))
+                        shipIsConflicting = true;
+                }
             }
+            if(!shipIsConflicting) 
+                availableEndLocations.push_back(endLocation); 
         }
-        if(!shipIsConflicting) 
-            availableEndLocations.push_back(endLocation); 
-    }                         
+    }                    
+                             
 }
 
 
