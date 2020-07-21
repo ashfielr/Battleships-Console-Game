@@ -1,7 +1,9 @@
 #include "battleUserPlayer.h"
 #include "textInterface.h"
+#include "ship.h"
 
 #include <vector>
+#include <iostream>
 
 /* Constructor - passing smart pointer to the player in which this instance is within */
 BattleUserPlayer::BattleUserPlayer(const Player* _playerPtr)
@@ -102,7 +104,7 @@ std::vector<std::pair<int,int>> getShipLocations(const std::pair<int,int>& start
 }
 
 // FRIEND function of Player class
-void addToEndingLocationsIfValid(Player* playerPtr, std::pair<int,int>& startLocation, int valueChanged, char columnOrRowChanged, std::vector<std::pair<int,int>>& availableEndLocations, int size)
+void addToEndingLocationsIfValid(const Player* playerPtr, std::pair<int,int>& startLocation, int valueChanged, char columnOrRowChanged, std::vector<std::pair<int,int>>& availableEndLocations, int size)
 {
     if(valueChanged > 0 && valueChanged < 9)
     {
@@ -114,12 +116,11 @@ void addToEndingLocationsIfValid(Player* playerPtr, std::pair<int,int>& startLoc
             
             // CHECK if conflicting with a ship already placed
             bool shipIsConflicting = false;
-            for(std::vector<Ship>::iterator shipIter = playerPtr->ships.begin(); shipIter!=playerPtr->ships.end(); std::next(shipIter))
+            for(Ship ship : playerPtr->ships)
             {
                 for(std::vector<std::pair<int,int>>::iterator potentialLocationsIter = potentialShipLocations.begin(); potentialLocationsIter!=potentialShipLocations.end(); std::next(potentialLocationsIter) )
                 {
-                    if(shipIter->isLocationOfShip(*potentialLocationsIter))
-                        shipIsConflicting = true;
+                    shipIsConflicting = ship.isLocationOfShip(*potentialLocationsIter);
                 }
             }
             if(!shipIsConflicting) 
@@ -133,12 +134,11 @@ void addToEndingLocationsIfValid(Player* playerPtr, std::pair<int,int>& startLoc
 
             // CHECK if conflicting with a ship already placed
             bool shipIsConflicting = false;
-            for(std::vector<Ship>::iterator shipIter = playerPtr->ships.begin(); shipIter!=playerPtr->ships.end(); std::next(shipIter))
+            for(Ship ship : playerPtr->ships)
             {
                 for(std::vector<std::pair<int,int>>::iterator potentialLocationsIter = potentialShipLocations.begin(); potentialLocationsIter!=potentialShipLocations.end(); std::next(potentialLocationsIter) )
                 {
-                    if(shipIter->isLocationOfShip(*potentialLocationsIter))
-                        shipIsConflicting = true;
+                    shipIsConflicting = ship.isLocationOfShip(*potentialLocationsIter);
                 }
             }
             if(!shipIsConflicting) 
@@ -152,12 +152,74 @@ void addToEndingLocationsIfValid(Player* playerPtr, std::pair<int,int>& startLoc
 /* Deals with placing a ship on the player's grid */ 
 std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
 {
-     // ADD CODE HERE
+    // Ask user for ship start location
     TextInterface::display("Please input the starting location of your ship...");
     int columnEntered = TextInterface::receiveInput("Enter the column: ",int(1)); // Input int from user
     int rowEntered = TextInterface::receiveInput("Enter the row: ",int(1)); // Input int from user
     
     std::pair<int,int> startLocation = std::make_pair(columnEntered, rowEntered);
     
+    std::vector<std::pair<int,int>> potentialEndLocations;
+    
+    // Loop to check for 4 potential directions for end location of ship
+    // Above, below, to the left of, to the right of the starting location
+    for(int i=0; i<4; i++)
+    {
+        switch(i)
+        {
+            // Check to the left
+            case 0: 
+            {
+                int endColumn = columnEntered - size;
+                addToEndingLocationsIfValid(playerPtr, startLocation, endColumn, 'C', potentialEndLocations, size);
+                break;                
+            }                
+                
+            // Check to the right
+            case 1: 
+            {
+                int endColumn = columnEntered + size;
+                addToEndingLocationsIfValid(playerPtr, startLocation, endColumn, 'C', potentialEndLocations, size);
+                break;
+            }
+                
+            // Check to below
+            case 2: 
+            {
+                int endRow = rowEntered - size;
+                addToEndingLocationsIfValid(playerPtr, startLocation, endRow, 'R', potentialEndLocations, size);
+                break;
+            }
+                
+            // Check to above
+            case 3: 
+            {
+                int endRow = rowEntered + size;
+                addToEndingLocationsIfValid(playerPtr, startLocation, endRow, 'R', potentialEndLocations, size);
+                break;
+            }
+        }       
+    }
+    
+    // Outputting the valid ending locations for the ship and asking the user to choose one of these for their ship
+    if(potentialEndLocations.size() > 1)
+    {
+        // Asking user to choose their ending location of the ship
+        TextInterface::display("Here are the options for the end point of your ship:");
+        for(int i=0; i<potentialEndLocations.size(); i++)
+        {
+            std::cout << i << ": (" << std::get<0>(potentialEndLocations[i]) << ", " << std::get<1>(potentialEndLocations[i]) << ")" << std::endl;
+        }
+        int optionRequested = int(TextInterface::receiveInput("Enter the option you wish to choose: ", int(1)));
+        std::pair<int,int> endingLocationChoosen = potentialEndLocations[optionRequested];
+        
+        return getShipLocations(startLocation, endingLocationChoosen, size);
+        
+    }
+    else
+    {
+        TextInterface::display("Your starting location is not valid.");
+        placeShip(size);
+    }
     
 }

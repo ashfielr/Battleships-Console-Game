@@ -13,7 +13,7 @@ class Ship
         std::vector<std::pair<int,int>> locationsDestroyed;
         
         /* Method which will be used to determine if a location on a grid is included in a vector of locations */
-        bool isGridLocationInVector(std::vector<std::pair<int,int>> gridLocations, std::pair<int,int> targetLocation);
+        const bool isGridLocationInVector(std::vector<std::pair<int,int>> gridLocations, std::pair<int,int> targetLocation);
     
     public:
         /* Constructor */
@@ -29,10 +29,10 @@ class Ship
         /* Returns a bool value based on @gridLocation location passed */
         /* true if @gridLocation is a location which the ship occupies */
         /* false if @gridLocation is not a location that the ship occupies */
-        bool isLocationOfShip(const std::pair<int,int>& gridLocation);
+        const bool isLocationOfShip(std::pair<int,int> gridLocation);
         
         /* Adds the @gridLocation locaiton to vector of locations of the ship which have been destroyed - @locationsDestroyed */
-        void addToLocationsDestroyed(const std::pair<int,int>& gridLocation);
+        void addToLocationsDestroyed(std::pair<int,int> gridLocation);
         
         // The number of cells the ship will occupy on the grid
         int size();
