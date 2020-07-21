@@ -101,9 +101,62 @@ std::vector<std::pair<int,int>> getShipLocations(const std::pair<int,int>& start
     return potentialShipLocations;
 }
 
+// FRIEND function of Player class
+void addToEndingLocationsIfValid(Player* playerPtr, std::pair<int,int>& startLocation, int valueChanged, char columnOrRowChanged, std::vector<std::pair<int,int>>& availableEndLocations, int size)
+{
+    if(valueChanged > 0 && valueChanged < 9)
+    {
+        if(columnOrRowChanged == 'C')
+        {            
+            std::pair<int,int> endLocation = std::make_pair(valueChanged, std::get<1>(startLocation)); // End location of the ship
+                
+            std::vector<std::pair<int,int>> potentialShipLocations = getShipLocations(startLocation, endLocation, size); // Locations of the potential ship
+            
+            // CHECK if conflicting with a ship already placed
+            bool shipIsConflicting = false;
+            for(std::vector<Ship>::iterator shipIter = playerPtr->ships.begin(); shipIter!=playerPtr->ships.end(); std::next(shipIter))
+            {
+                for(std::vector<std::pair<int,int>>::iterator potentialLocationsIter = potentialShipLocations.begin(); potentialLocationsIter!=potentialShipLocations.end(); std::next(potentialLocationsIter) )
+                {
+                    if(shipIter->isLocationOfShip(*potentialLocationsIter))
+                        shipIsConflicting = true;
+                }
+            }
+            if(!shipIsConflicting) 
+                 availableEndLocations.push_back(endLocation);
+        }
+    }                    
+    else if(columnOrRowChanged == 'R')
+    {
+        std::pair<int,int> endLocation = std::make_pair(std::get<0>(startLocation),valueChanged); // End location of the ship
+
+        std::vector<std::pair<int,int>> potentialShipLocations = getShipLocations(startLocation, endLocation, size); // Locations of the potential ship
+
+        // CHECK if conflicting with a ship already placed
+        bool shipIsConflicting = false;
+        for(std::vector<Ship>::iterator shipIter = playerPtr->ships.begin(); shipIter!=playerPtr->ships.end(); std::next(shipIter))
+        {
+            for(std::vector<std::pair<int,int>>::iterator potentialLocationsIter = potentialShipLocations.begin(); potentialLocationsIter!=potentialShipLocations.end(); std::next(potentialLocationsIter) )
+            {
+                if(shipIter->isLocationOfShip(*potentialLocationsIter))
+                    shipIsConflicting = true;
+            }
+        }
+        if(!shipIsConflicting) 
+            availableEndLocations.push_back(endLocation); 
+    }                         
+}
+
 
 /* Deals with placing a ship on the player's grid */ 
 std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
 {
-     // ADD CODE HERE   
+     // ADD CODE HERE
+    TextInterface::display("Please input the starting location of your ship...");
+    int columnEntered = TextInterface::receiveInput("Enter the column: ",int(1)); // Input int from user
+    int rowEntered = TextInterface::receiveInput("Enter the row: ",int(1)); // Input int from user
+    
+    std::pair<int,int> startLocation = std::make_pair(columnEntered, rowEntered);
+    
+    
 }

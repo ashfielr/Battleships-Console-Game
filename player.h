@@ -29,6 +29,8 @@ class Player
         // The role the player will play - the player will either play the role of a user or a computer
         IBattlePlayerRole* role;
         
+        // Friend function in class that implements IBattlePlayerRole class that will access the player's ships
+        friend void addToEndingLocationsIfValid(Player* playerPtr, std::pair<int,int>& startLocation, int valueChanged, char columnOrRowChanged, std::vector<std::pair<int,int>>& availableEndLocations, int size);
     
     public:
         /* Constructor */
