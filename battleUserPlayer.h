@@ -24,8 +24,5 @@ class BattleUserPlayer : public IBattlePlayerRole
         
         /* Deals with placing a ship on the player's grid */ 
         std::vector<std::pair<int,int>> placeShip(int size) override;
-        
-        /* Returns the raw pointer of Player object in which this instance is found */
-        const Player* getPlayerPtr();
 };
 #endif

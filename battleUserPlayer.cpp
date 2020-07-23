@@ -17,12 +17,6 @@ BattleUserPlayer::~BattleUserPlayer()
     delete playerPtr;
 }
 
-/* Returns the raw pointer to the Player object in which this instance is found */
-const Player* BattleUserPlayer::getPlayerPtr()
-{
-    return playerPtr;
-}
-
 /* Request the user for a location that they want to use their turn to fire at */
 /* Returns the grid location the user chose to fire at */
 std::pair<int,int> BattleUserPlayer::takeTurn()
