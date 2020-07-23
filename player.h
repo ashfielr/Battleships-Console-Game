@@ -33,7 +33,8 @@ class Player
         friend void addToEndingLocationsIfValid(const Player* playerPtr, std::pair<int,int>& startLocation, int valueChanged, char columnOrRowChanged, std::vector<std::pair<int,int>>& availableEndLocations, int size);
     
     public:
-        /* Constructor */
+        /* Constructors */
+        Player();
         Player(std::string _name, bool isAUser);
         
         /* Destructor - free up memory */
@@ -41,6 +42,9 @@ class Player
     
         /* Returns the player's name */
         std::string getName();
+        
+        /* Getter for @role private field */
+        IBattlePlayerRole* getRole();
         
         /* Allows the player's name to be changed */
         void setName(std::string _name);

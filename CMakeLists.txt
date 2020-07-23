@@ -1,7 +1,12 @@
+######################### START - CMake adapted from 4003CEM codio tasks taken as an example to build my files #########################
+################################################################################################################################
+
 cmake_minimum_required(VERSION 3.17)
 project(Battleships CXX)
 
 set(CMAKE_CXX_STANDARD 14)
+
+set(CMAKE_VERBOSE_MAKEFILE ON) # Line taken from https://bytefreaks.net/programming-2/make-building-with-cmake-verbose  - Makes the build output more detailed
 
 # location of source code files
 include_directories(${CMAKE_SOURCE_DIR})
@@ -44,8 +49,25 @@ add_library(
 	battleUserPlayer.cpp
 )
 
-target_link_libraries(ship gridLocation)
+add_library(
+	battle
+	battle.h
+	battle.cpp
+)
 
-target_link_libraries(player gridLocation ship grid)
+# CMake Documentation - https://cmake.org/cmake/help/v3.0/command/add_executable.html
+add_executable(
+    Game game.cpp
+)
+
+target_link_libraries(player ship grid battleUserPlayer)
 
 target_link_libraries(battleUserPlayer textInterface)
+target_link_libraries(battleUserPlayer player)
+
+target_link_libraries(battle player)
+
+target_link_libraries(Game battle)
+
+################################################################################################################################
+######################### END - CMake adapted from codio tasks taken as an example to build my files #########################

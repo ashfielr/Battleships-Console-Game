@@ -3,7 +3,7 @@ using namespace std;
 #include "player.h"
 #include "battleUserPlayer.h"
 
-/* Constructor */
+/* Constructors */
 Player::Player(std::string _name, bool isAUser)
 {
     name = _name;
@@ -30,6 +30,11 @@ Player::~Player()
 string Player::getName()
 {
     return name;
+}
+
+IBattlePlayerRole* Player::getRole()
+{
+    return role;
 }
         
 /* Allows the player's name to be changed */
