@@ -6,11 +6,10 @@
 
 #include "grid.h" // Grid library
 #include "ship.h" // Ship library
-#include "iBattlePlayerRole.h" 
 
 class Player
 {
-    private:        
+    protected:        
         // The player name
         std::string name;
         
@@ -25,28 +24,31 @@ class Player
         
         // Collection of the locations on the grid the player has already used a turn to shoot at
         std::vector<std::pair<int,int>> gridLocationsShotAt;
-        
-        // The role the player will play - the player will either play the role of a user or a computer
-        IBattlePlayerRole* role;
-        
-        // Friend function in class that implements IBattlePlayerRole class that will access the player's ships
-        friend void addToEndingLocationsIfValid(const Player* playerPtr, std::pair<int,int>& startLocation, int valueChanged, char columnOrRowChanged, std::vector<std::pair<int,int>>& availableEndLocations, int size);
-    
+         
     public:
         /* Constructors */
         Player();
-        Player(std::string _name, bool isAUser);
-        
-        /* Destructor - free up memory */
-        ~Player();
+        Player(std::string _name);       
     
         /* Returns the player's name */
-        std::string getName();
-        
-        /* Getter for @role private field */
-        IBattlePlayerRole* getRole();
+        std::string getName() const;
         
         /* Allows the player's name to be changed */
         void setName(std::string _name);
+        
+        /* Returns true if all of the player's ships have been destroyed and flase if not */
+        bool isAllShipsDestroyed() const;
+        
+        /* Returns the player's ships */
+        std::vector<Ship> getShips() const;
+        
+        /* Adds a ship to the players set of ships */
+        void addShip(Ship shipToAdd);
+        
+        /* Returns the player's grid */
+        Grid getOwnGrid() const;
+        
+        /* Returns the player's version of enemy grid */
+        Grid getEnemyGrid() const;
 };
 #endif

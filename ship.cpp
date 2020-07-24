@@ -2,6 +2,7 @@ using namespace std;
 
 //Ship library to be implemented
 #include "ship.h"
+#include <iostream>
 
 #include <utility> // To use std::get to get an element from a std::pair
 
@@ -15,9 +16,9 @@ Ship::Ship(vector<std::pair<int,int>> _shipGridLocations)
 /* Takes a vector and a target grid location and checks if it is present in the vector */
 const bool Ship::isGridLocationInVector(vector<std::pair<int,int>> gridLocations, std::pair<int,int> targetLocation)
 {
-    for(vector<std::pair<int,int>>::iterator it=gridLocations.begin(); it!=gridLocations.end(); next(it))
-    {
-        if(std::get<1>(*it) == std::get<1>(targetLocation) && std::get<0>(*it) == std::get<1>(targetLocation)) // https://en.cppreference.com/w/cpp/utility/pair/get
+    for(unsigned i=0; i<gridLocations.size(); i++)
+    {       
+        if(std::get<1>(gridLocations[i]) == std::get<1>(targetLocation) && std::get<0>(gridLocations[i]) == std::get<0>(targetLocation)) // https://en.cppreference.com/w/cpp/utility/pair/get
             return true;
     }
     return false;
@@ -32,7 +33,7 @@ vector<std::pair<int,int>> Ship::getShipLocations()
 /* Returns a true bool false if the ship has been destroyed otherwise returns false */
 bool Ship::isDestroyed()
 {
-    if(locationsDestroyed.size() == this->size())
+    if(locationsDestroyed.size() == (unsigned)this->size()) // Had warning with comparison between unsigned and signed so this page helped me fix the warning - https://stackoverflow.com/questions/3660901/a-warning-comparison-between-signed-and-unsigned-integer-expressions
     {
         for(int i=0; i<this->size(); i++)
         {
@@ -49,14 +50,14 @@ bool Ship::isDestroyed()
 /* Returns a bool value - false if the location passed ( @gridLocation ) is not a location belonging to the ship */
 const bool Ship::isLocationOfShip(std::pair<int,int> gridLocation)
 {
-    isGridLocationInVector(shipGridLocations, gridLocation);
+    return isGridLocationInVector(shipGridLocations, gridLocation);
 }
 
 /* When a ship location has been fired it is destroyed */
 /* This method added the location that has been destroyed to the list of destroyed locations */
 void Ship::addToLocationsDestroyed(std::pair<int,int> gridLocation)
 {
-    // Add code here to add location to vector of destroyed locations
+    locationsDestroyed.push_back(gridLocation);
 }
 
 /* Returns the size of the ship */

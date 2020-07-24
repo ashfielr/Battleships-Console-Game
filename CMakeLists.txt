@@ -6,7 +6,7 @@ project(Battleships CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(CMAKE_VERBOSE_MAKEFILE ON) # Line taken from https://bytefreaks.net/programming-2/make-building-with-cmake-verbose  - Makes the build output more detailed
+#set(CMAKE_VERBOSE_MAKEFILE ON) # Line taken from https://bytefreaks.net/programming-2/make-building-with-cmake-verbose  - Makes the build output more detailed
 
 # location of source code files
 include_directories(${CMAKE_SOURCE_DIR})
@@ -38,21 +38,15 @@ add_library(
 )
 
 add_library(
-	textInterface
-	textInterface.h
-	textInterface.cpp
-)
-
-add_library(
 	battleUserPlayer
 	battleUserPlayer.h
 	battleUserPlayer.cpp
 )
 
 add_library(
-	battle
-	battle.h
-	battle.cpp
+	playerVsPlayer
+	playerVsPlayer.h
+	playerVsPlayer.cpp
 )
 
 # CMake Documentation - https://cmake.org/cmake/help/v3.0/command/add_executable.html
@@ -61,13 +55,10 @@ add_executable(
 )
 
 target_link_libraries(player ship grid battleUserPlayer)
-
-target_link_libraries(battleUserPlayer textInterface)
 target_link_libraries(battleUserPlayer player)
+target_link_libraries(playerVsPlayer player)
 
-target_link_libraries(battle player)
-
-target_link_libraries(Game battle)
+target_link_libraries(Game playerVsPlayer)
 
 ################################################################################################################################
 ######################### END - CMake adapted from codio tasks taken as an example to build my files #########################

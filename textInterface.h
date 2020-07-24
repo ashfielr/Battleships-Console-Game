@@ -7,8 +7,7 @@ class TextInterface
 {
     private:         
         // Constructor is private 
-        TextInterface();
-        
+        TextInterface();        
     
     public:    
         /* Show the a grid on the screen */
