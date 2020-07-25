@@ -236,13 +236,14 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
         } while(!validOptionSelected);
         
         
-        std::pair<int,int> endingLocationChoosen = potentialEndLocations[optionRequested];        
-        shipLocationsToReturn = getShipLocations(startLocation, endingLocationChoosen, size);        
+        std::pair<int,int> endingLocationChoosen = potentialEndLocations[optionRequested]; 
+        
+        shipLocationsToReturn = getShipLocations(startLocation, endingLocationChoosen, size); // The locations of the ship to be placed 
     }
     else
     {
         std::cout << "Your starting location is not valid." << std::endl;
-        placeShip(size);
+        shipLocationsToReturn = placeShip(size); // RECURSION - repeat until a valid starting location is entered and ending location chosen
     }
     
     return shipLocationsToReturn;

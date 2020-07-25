@@ -80,15 +80,15 @@ void PlayerVsPlayer::play()
     updateGridsAndShips(shotTakenP2, player2, player1);
 }
 
-/* Method which controls turns */
-void PlayerVsPlayer::placeShips()
+void PlayerVsPlayer::placeShipsForAGivenBattleUserPlayer(BattleUserPlayer &player)
 {
     bool shipOfSize3Placed = false;
     for(int sizeOfShip=5; sizeOfShip >=2; sizeOfShip--)
     {
-        player1.addShip(player1.placeShip(sizeOfShip));
-        std::cout << "Your current grid: " << std::endl;
-        displayGrid(player1.getOwnGrid());
+        player.addShip(player.placeShip(sizeOfShip)); //Add ship to player and player's grid
+        // Display the player's grid after ship has been placed
+        std::cout << "Your current grid: " << std::endl; 
+        displayGrid(player.getOwnGrid());
         
         if(sizeOfShip==3 && !shipOfSize3Placed) // Will allow two ships of size 3 to be placed
         {
@@ -96,6 +96,12 @@ void PlayerVsPlayer::placeShips()
             sizeOfShip++;
         }            
     }
+}
+
+/* Method which controls placing ships at start for both players */
+void PlayerVsPlayer::placeShips()
+{
+    placeShipsForAGivenBattleUserPlayer(player1);
         
     /*player2.addShip(player2.placeShip(5));
     player2.addShip(player2.placeShip(4));

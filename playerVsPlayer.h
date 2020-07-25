@@ -22,7 +22,10 @@ class PlayerVsPlayer : public Battle
         /* Method which controls turns */
         void play() override;
         
-        /* Method which controls placing ships at start */
+        /* Allows ships to be placed for a given player */
+        void placeShipsForAGivenBattleUserPlayer(BattleUserPlayer &player);
+        
+        /* Method which controls placing ships at start for both players */
         void placeShips() override;
 };
 #endif
