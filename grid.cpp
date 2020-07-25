@@ -31,3 +31,9 @@ void Grid::setGrid(array<array<char,10>,10> _grid)
 {
     grid = _grid;
 }
+
+/* Allows a character to be changed in the @grid */
+void Grid::alterGridPositionChar(char character, int row, int col)
+{
+    grid[row][col] = character;
+}

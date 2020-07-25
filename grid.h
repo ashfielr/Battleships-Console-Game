@@ -26,5 +26,8 @@ class Grid
 
         /* Setter for @grid */
         void setGrid(std::array<std::array<char,10>,10> grid);
+        
+        /* Allows a character to be changed in the @grid */
+        void alterGridPositionChar(char character, int row, int col);
 };
 #endif

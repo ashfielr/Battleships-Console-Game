@@ -51,7 +51,15 @@ std::vector<Ship> Player::getShips() const
 /* Adds a ship to player */
 void Player::addShip(Ship shipToAdd)
 {
-    ships.emplace_back(shipToAdd);
+    ships.emplace_back(shipToAdd); // Adding ship objects
+    
+    // Adding the ship to player's grid (each location marked with 'X' character)
+    for(unsigned i=0; i<shipToAdd.getShipLocations().size(); i++)
+    {
+        int row = std::get<1>(shipToAdd.getShipLocations()[i]);
+        int col = std::get<0>(shipToAdd.getShipLocations()[i]);
+        playerGrid.alterGridPositionChar('X', row, col);
+    }
 }
 
 /* Returns the player's grid */

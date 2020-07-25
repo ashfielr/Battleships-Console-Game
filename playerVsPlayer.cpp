@@ -51,6 +51,22 @@ void PlayerVsPlayer::updateGridsAndShips(const std::pair<int,int> &gridLocationT
         enemyPlayer.getOwnGrid().getGrid()[row][col] = 'M';
 }
 
+void displayGrid(const Grid &gridToDisplay)
+{
+    std::cout << "[   ] | [ 0 ] [ 1 ] [ 2 ] [ 3 ] [ 4 ] [ 5 ] [ 6 ] [ 7 ] [ 8 ] [ 9 ]" << std::endl;
+    std::cout << "-------------------------------------------------------------------" << std::endl;
+    for(int row=0; row<10; row++)
+    {
+        std::cout << "[ " << row << " ] |";
+        
+        for(int col=0; col<10; col++)
+        {
+            std::cout << " [ " << gridToDisplay.getGrid()[row][col] << " ]";
+        }
+        std::cout << std::endl;
+    }
+}
+
 /* Method which controls turns */
 void PlayerVsPlayer::play()
 {
@@ -68,34 +84,30 @@ void PlayerVsPlayer::play()
 void PlayerVsPlayer::placeShips()
 {
     player1.addShip(player1.placeShip(5));
-    //std::cout << "No Ships: " << player1.getShips().size();
+    std::cout << "Your current grid: " << std::endl;
+    displayGrid(player1.getOwnGrid());
     
-    /*for(Ship _ship : player1.getShips())
-    {
-        for(unsigned i=0; i<_ship.getShipLocations().size(); i++)
-        {
-            std::cout << std::get<0>(_ship.getShipLocations()[i]) << ", " << std::get<1>(_ship.getShipLocations()[i]) << "     ";
-        }
-        std::cout << std::endl;
-    }
-    std::cout << "\n" << std::endl;
-    */
     
     player1.addShip(player1.placeShip(4));
-    //std::cout << "No Ships: " << player1.getShips().size();
+    std::cout << "Your current grid: " << std::endl;
+    displayGrid(player1.getOwnGrid());
     
     
-    player1.addShip(player1.placeShip(3));    
-    //std::cout << "No Ships: " << player1.getShips().size() << std::endl;
+    player1.addShip(player1.placeShip(3)); 
+    std::cout << "Your current grid: " << std::endl;
+    displayGrid(player1.getOwnGrid());
     
-    
-    //std::cout << "\n" << std::endl;
     player1.addShip(player1.placeShip(3));
-    player1.addShip(player1.placeShip(2));
+        std::cout << "Your current grid: " << std::endl;
+    displayGrid(player1.getOwnGrid());
     
-    player2.addShip(player2.placeShip(5));
+    player1.addShip(player1.placeShip(2));
+    std::cout << "Your current grid: " << std::endl;
+    displayGrid(player1.getOwnGrid());
+    
+    /*player2.addShip(player2.placeShip(5));
     player2.addShip(player2.placeShip(4));
     player2.addShip(player2.placeShip(3));
     player2.addShip(player2.placeShip(3));
-    player2.addShip(player2.placeShip(2));
+    player2.addShip(player2.placeShip(2));*/
 }
