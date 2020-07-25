@@ -83,28 +83,20 @@ void PlayerVsPlayer::play()
 /* Method which controls turns */
 void PlayerVsPlayer::placeShips()
 {
-    player1.addShip(player1.placeShip(5));
-    std::cout << "Your current grid: " << std::endl;
-    displayGrid(player1.getOwnGrid());
-    
-    
-    player1.addShip(player1.placeShip(4));
-    std::cout << "Your current grid: " << std::endl;
-    displayGrid(player1.getOwnGrid());
-    
-    
-    player1.addShip(player1.placeShip(3)); 
-    std::cout << "Your current grid: " << std::endl;
-    displayGrid(player1.getOwnGrid());
-    
-    player1.addShip(player1.placeShip(3));
+    bool shipOfSize3Placed = false;
+    for(int sizeOfShip=5; sizeOfShip >=2; sizeOfShip--)
+    {
+        player1.addShip(player1.placeShip(sizeOfShip));
         std::cout << "Your current grid: " << std::endl;
-    displayGrid(player1.getOwnGrid());
-    
-    player1.addShip(player1.placeShip(2));
-    std::cout << "Your current grid: " << std::endl;
-    displayGrid(player1.getOwnGrid());
-    
+        displayGrid(player1.getOwnGrid());
+        
+        if(sizeOfShip==3 && !shipOfSize3Placed) // Will allow two ships of size 3 to be placed
+        {
+            shipOfSize3Placed = true;
+            sizeOfShip++;
+        }            
+    }
+        
     /*player2.addShip(player2.placeShip(5));
     player2.addShip(player2.placeShip(4));
     player2.addShip(player2.placeShip(3));
