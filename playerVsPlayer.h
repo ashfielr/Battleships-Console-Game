@@ -17,7 +17,12 @@ class PlayerVsPlayer : public Battle
         bool isGameOver() override;
         
         /* Method to update the Grids and Ships after a location has been choosen for a player's turn */
-        void updateGridsAndShips(const std::pair<int,int> &gridLocationToUpdate, const Player& player, const Player& enemyPlayer) override;     
+        /* Returns - true if ship was hit, false if a ship was not hit */
+        bool updateGridsAndShips(const std::pair<int,int> &gridLocationToUpdate, const Player& player, const Player& enemyPlayer) override;     
+        
+        /* Method deals with an individual player's turn */
+        /* Returns - true if the player has won on their turn, otherwise it returns false */
+        bool takeTurnForAGivenBattleUserPlayer(BattleUserPlayer &player, int playerNumber, BattleUserPlayer &enemyPlayer);
         
         /* Method which controls turns */
         void play() override;

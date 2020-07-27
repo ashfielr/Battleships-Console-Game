@@ -34,16 +34,16 @@ void Player::setName(std::string _name)
 bool Player::isAllShipsDestroyed() const
 {
     bool allShipsDestroyed = true;
-    for(Ship ship : ships)
+    for(std::shared_ptr<Ship> ship : ships)
     {
-        if(!ship.isDestroyed())
+        if(!ship->isDestroyed())
             allShipsDestroyed = false;
     }
     return allShipsDestroyed;
 }
 
 /* Returns the player's ships */
-std::vector<Ship> Player::getShips() const
+std::vector<std::shared_ptr<Ship>> Player::getShips() const
 {
     return ships;
 }
@@ -51,7 +51,8 @@ std::vector<Ship> Player::getShips() const
 /* Adds a ship to player */
 void Player::addShip(Ship shipToAdd)
 {
-    ships.emplace_back(shipToAdd); // Adding ship objects
+    std::shared_ptr<Ship> shipToAddPtr = std::make_shared<Ship>(shipToAdd);
+    ships.emplace_back(shipToAddPtr); // Adding ship objects
     
     // Adding the ship to player's grid (each location marked with 'X' character)
     for(unsigned i=0; i<shipToAdd.getShipLocations().size(); i++)
@@ -72,4 +73,16 @@ Grid Player::getOwnGrid() const
 Grid Player::getEnemyGrid() const
 {
     return enemyGrid;
+}
+
+/* Returns the grid locations the player has shot at */
+std::vector<std::pair<int,int>> Player::getGridLocationsShotAt() const
+{
+    return gridLocationsShotAt;
+}
+
+/* Adds location to the grid locations the player has shot at */
+void Player::addToLocationsShotAt(std::pair<int,int> location)
+{
+    gridLocationsShotAt.emplace_back(location);
 }

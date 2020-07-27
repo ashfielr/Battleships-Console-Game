@@ -14,7 +14,7 @@ class Player
         std::string name;
         
         // The Ships that the user owns
-        std::vector<Ship> ships;
+        std::vector<std::shared_ptr<Ship>> ships;
         
         // The player's own grid on which their ships are located and status from enemy shots are displayed
         Grid playerGrid;
@@ -40,7 +40,7 @@ class Player
         bool isAllShipsDestroyed() const;
         
         /* Returns the player's ships */
-        std::vector<Ship> getShips() const;
+        std::vector<std::shared_ptr<Ship>> getShips() const;
         
         /* Adds a ship to the players set of ships */
         void addShip(Ship shipToAdd);
@@ -50,5 +50,11 @@ class Player
         
         /* Returns the player's version of enemy grid */
         Grid getEnemyGrid() const;
+        
+        /* Returns the grid locations the player has shot at */
+        std::vector<std::pair<int,int>> getGridLocationsShotAt() const;
+        
+        /* Adds location to the grid locations the player has shot at */
+        void addToLocationsShotAt(std::pair<int,int> location);
 };
 #endif

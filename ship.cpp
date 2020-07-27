@@ -53,11 +53,18 @@ const bool Ship::isLocationOfShip(std::pair<int,int> gridLocation)
     return isGridLocationInVector(shipGridLocations, gridLocation);
 }
 
+/* Returns a bool value - true if the location passed ( @gridLocation ) is a location destroyed already */
+/* Returns a bool value - false if the location passed ( @gridLocation ) is not a location destroyed already */
+const bool Ship::isLocationAlreadyDestroyed(std::pair<int,int> gridLocation)
+{
+    return isGridLocationInVector(locationsDestroyed, gridLocation);
+}
+
 /* When a ship location has been fired it is destroyed */
 /* This method added the location that has been destroyed to the list of destroyed locations */
-void Ship::addToLocationsDestroyed(std::pair<int,int> gridLocation)
+void Ship::addToLocationsDestroyed(const std::pair<int,int> &gridLocationHit)
 {
-    locationsDestroyed.push_back(gridLocation);
+    locationsDestroyed.emplace_back(gridLocationHit);
 }
 
 /* Returns the size of the ship */

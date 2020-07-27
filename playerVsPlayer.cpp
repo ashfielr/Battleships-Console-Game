@@ -8,6 +8,17 @@
 #include <iostream>
 
 
+void passTurn()
+{
+    char letter2;
+    std::cout << "Enter a character then press enter to pass the turn on: ";
+    std::cin  >> letter2;
+    
+    for(int i=0; i<10; i++)
+    {
+        std::cout << "\n\n\n\n\n\n\n\n" << std::endl;
+    }
+}
 
 
 // Constructor
@@ -19,20 +30,24 @@ PlayerVsPlayer::PlayerVsPlayer()
 // Return bool whether game is finished
 bool PlayerVsPlayer::isGameOver()
 {
-    return (player1.isAllShipsDestroyed() || player2.isAllShipsDestroyed());
+    return (player2.isAllShipsDestroyed() || player1.isAllShipsDestroyed());
 }
 
-/* Method to update the Grids after a location has been choosen for a player's turn */
-void PlayerVsPlayer::updateGridsAndShips(const std::pair<int,int> &gridLocationToUpdate, const Player& player, const Player& enemyPlayer)
+/* Method to update the Grids and Ships after a location has been choosen for a player's turn */
+/* Returns - true if ship was hit, false if a ship was not hit */
+bool PlayerVsPlayer::updateGridsAndShips(const std::pair<int,int> &gridLocationToUpdate, const Player& player, const Player& enemyPlayer)
 {
     // Updating the Player's status grid for the shots they have fired
     bool shipWasHit = false;
-    for(Ship enemyShip : enemyPlayer.getShips()) // For each Ship belonging to the enemy player
+    bool shipWasDestroyed = false;
+    for(std::shared_ptr<Ship> enemyShip : enemyPlayer.getShips()) // For each Ship belonging to the enemy player
     {
-        if(enemyShip.isLocationOfShip(gridLocationToUpdate)) // If the player hit a ship
+        if(enemyShip->isLocationOfShip(gridLocationToUpdate) && !enemyShip->isLocationAlreadyDestroyed(gridLocationToUpdate)) // If the player hit a ship
         {            
-            enemyShip.addToLocationsDestroyed(gridLocationToUpdate); // Add to locaitons destroyed on the ship instance
+            enemyShip->addToLocationsDestroyed(gridLocationToUpdate); // Add to locaitons destroyed on the ship instance  
             shipWasHit = true;
+            if(enemyShip->isDestroyed())
+                std::cout << "Ship destroyed!" << std::endl;
         }
     }
    
@@ -49,6 +64,8 @@ void PlayerVsPlayer::updateGridsAndShips(const std::pair<int,int> &gridLocationT
         enemyPlayer.getOwnGrid().getGrid()[row][col] = 'H';
     else
         enemyPlayer.getOwnGrid().getGrid()[row][col] = 'M';
+    
+    return shipWasHit;
 }
 
 void displayGrid(const Grid &gridToDisplay)
@@ -67,17 +84,50 @@ void displayGrid(const Grid &gridToDisplay)
     }
 }
 
+/* Method deals with an individual player's turn */
+/* Returns - true if the player taken a shot that they have not already taken, otherwise it returns false */
+bool PlayerVsPlayer::takeTurnForAGivenBattleUserPlayer(BattleUserPlayer &player, int playerNumber, BattleUserPlayer &enemyPlayer)
+{
+    bool gameOver = false;
+    std::pair<int,int> shotTakenP1 = player.takeTurn();
+    
+    //Check if the location has already been shot at
+    for(int i=0; i<player.getGridLocationsShotAt().size(); i++)
+    {
+        // If they have already shot at that location
+        if(std::get<0>(player.getGridLocationsShotAt()[i]) == std::get<0>(shotTakenP1) && std::get<1>(player.getGridLocationsShotAt()[i]) == std::get<1>(shotTakenP1))
+        {
+            std::cout << "You have already shot at that location..." << std::endl;
+            return false;
+        }
+    }
+    
+    player.addToLocationsShotAt(shotTakenP1);
+        
+    if(updateGridsAndShips(shotTakenP1, player, enemyPlayer))
+        std::cout << "HIT" << std::endl;
+    else
+        std::cout << "MISS" << std::endl;
+    
+    return true;
+}
+
 /* Method which controls turns */
 void PlayerVsPlayer::play()
 {
-    std::pair<int,int> shotTakenP1 = player1.takeTurn();
-    updateGridsAndShips(shotTakenP1, player1, player2);
-    
+    std::cout << "PLAYER1: Your turn." << std::endl;
+    while(!takeTurnForAGivenBattleUserPlayer(player1, 1, player2)); // If Player1 has successfully taken a valid shot
     if(isGameOver())
-        return;
+        std::cout << "You won!" << std:: endl;
+           
+    passTurn(); // Waits for player to enter a character then will continue
     
-    std::pair<int,int> shotTakenP2 = player1.takeTurn();
-    updateGridsAndShips(shotTakenP2, player2, player1);
+    std::cout << "PLAYER2: Your turn." << std::endl;
+    while(!takeTurnForAGivenBattleUserPlayer(player2, 1, player1)); // If Player2 has successfully taken a valid shot
+    if(isGameOver())
+        std::cout << "You won!" << std:: endl;       
+        
+    passTurn(); // Waits for player to enter a character then will continue
 }
 
 void PlayerVsPlayer::placeShipsForAGivenBattleUserPlayer(BattleUserPlayer &player)
@@ -101,11 +151,13 @@ void PlayerVsPlayer::placeShipsForAGivenBattleUserPlayer(BattleUserPlayer &playe
 /* Method which controls placing ships at start for both players */
 void PlayerVsPlayer::placeShips()
 {
+    std::cout << "Player1: you will now place your 5 ships." << std::endl;
     placeShipsForAGivenBattleUserPlayer(player1);
-        
-    /*player2.addShip(player2.placeShip(5));
-    player2.addShip(player2.placeShip(4));
-    player2.addShip(player2.placeShip(3));
-    player2.addShip(player2.placeShip(3));
-    player2.addShip(player2.placeShip(2));*/
+    
+    passTurn(); // Waits for player to enter a character then will continue
+    
+    std::cout << "Player2: you will now place your 5 ships." << std::endl;
+    placeShipsForAGivenBattleUserPlayer(player2);
+    
+    passTurn(); // Waits for player to enter a character then will continue
 }

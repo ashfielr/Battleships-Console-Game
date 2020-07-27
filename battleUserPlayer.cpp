@@ -28,6 +28,7 @@ std::pair<int,int> BattleUserPlayer::takeTurn()
     std::cin >> rowEntered;
     
     std::pair<int,int> gridLocationToFireAt = std::make_pair(columnEntered, rowEntered); // https://en.cppreference.com/w/cpp/utility/pair/make_pair
+
     return gridLocationToFireAt;
 }
 
@@ -100,7 +101,7 @@ std::vector<std::pair<int,int>> getShipLocations(const std::pair<int,int>& start
 }
 
 // FRIEND function of Player class
-void addToEndingLocationsIfValid(std::vector<Ship> &_ships, std::pair<int,int> &startLocation, int valueChanged, char columnOrRowChanged, std::vector<std::pair<int,int>> &availableEndLocations, int size)
+void addToEndingLocationsIfValid(std::vector<std::shared_ptr<Ship>> &_ships, std::pair<int,int> &startLocation, int valueChanged, char columnOrRowChanged, std::vector<std::pair<int,int>> &availableEndLocations, int size)
 {
     if(valueChanged >= 0 && valueChanged <= 9)
     {
@@ -111,12 +112,12 @@ void addToEndingLocationsIfValid(std::vector<Ship> &_ships, std::pair<int,int> &
             std::vector<std::pair<int,int>> potentialShipLocations = getShipLocations(startLocation, endLocation, size); // Locations of the potential ship
             
             // CHECK if conflicting with a ship already placed
-            for(Ship ship : _ships)
+            for(std::shared_ptr<Ship> ship : _ships)
             {
                 for(unsigned i=0; i<potentialShipLocations.size(); i++)
                 {
                     // ##################################################################std::cout << "Ship conflicting: " << ship.isLocationOfShip(potentialShipLocations[i]) << std::endl;// ########################################
-                    if(ship.isLocationOfShip(potentialShipLocations[i])) // Not a valid ending location so do not add
+                    if(ship->isLocationOfShip(potentialShipLocations[i])) // Not a valid ending location so do not add
                         return;
                 }
             }
@@ -130,12 +131,12 @@ void addToEndingLocationsIfValid(std::vector<Ship> &_ships, std::pair<int,int> &
             std::vector<std::pair<int,int>> potentialShipLocations = getShipLocations(startLocation, endLocation, size); // Locations of the potential ship
 
             // CHECK if conflicting with a ship already placed
-            for(Ship ship : _ships)
+            for(std::shared_ptr<Ship> ship : _ships)
             {
                 for(unsigned i=0; i<potentialShipLocations.size(); i++)
                 {
                     // ##################################################################std::cout << "Ship conflicting: " << ship.isLocationOfShip(potentialShipLocations[i]) << std::endl;
-                    if(ship.isLocationOfShip(potentialShipLocations[i])) // Not a valid ending location so do not add
+                    if(ship->isLocationOfShip(potentialShipLocations[i])) // Not a valid ending location so do not add
                         return;
                 }
             }
@@ -157,14 +158,24 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
     */
     std::vector<std::pair<int,int>> shipLocationsToReturn;
     
-    std::cout << "\n\nPlease input the starting location of your ship - Size: " << size << std::endl;
-    std::cout << "Enter the column: " << std::endl;
+    bool validStartingLocationEntered = false;
     int columnEntered;
-    std:: cin >> columnEntered;
-    
-    std::cout << "Enter the row: " << std::endl;
     int rowEntered;
-    std::cin >> rowEntered;    
+    while(!validStartingLocationEntered)
+    {
+        std::cout << "\n\nPlease input the starting location of your ship - Size: " << size << std::endl;
+        std::cout << "Enter the column: " << std::endl; 
+        std:: cin >> columnEntered;
+    
+        std::cout << "Enter the row: " << std::endl;
+        std::cin >> rowEntered;  
+        
+        if(columnEntered >= 0 & columnEntered <= 9 & rowEntered >= 0 & rowEntered <=9)
+            validStartingLocationEntered = true;
+        else
+            std::cout << "Invalid starting location." << std::endl;
+    }
+  
     
     std::pair<int,int> startLocation = std::make_pair(columnEntered, rowEntered);
     
@@ -188,9 +199,9 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
             // Check to the right
             case 1: 
             {
-                //std::cout << "Check R" << std::endl; ##################################
+                //std::cout << "Check R" << std::endl; //##################################
                 int endColumn = columnEntered + size - 1;
-                addToEndingLocationsIfValid(this->ships, startLocation, endColumn, 'C', potentialEndLocations, size);
+                addToEndingLocationsIfValid(this->ships, startLocation, endColumn, 'C', potentialEndLocations, size);               
                 break;
             }
                 
@@ -206,7 +217,7 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
             // Check to above
             case 3: 
             {
-                //std::cout << "Check U" << std::endl; ##################################
+                //std::cout << "Check U" << std::endl; //##################################
                 int endRow = rowEntered + size - 1;
                 addToEndingLocationsIfValid(this->ships, startLocation, endRow, 'R', potentialEndLocations, size);
                 break;
@@ -215,7 +226,7 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
     }
     
     // Outputting the valid ending locations for the ship and asking the user to choose one of these for their ship
-    if(potentialEndLocations.size() > 1)
+    if(potentialEndLocations.size() >= 1)
     {
         bool validOptionSelected = false;
         int optionRequested;
@@ -233,6 +244,8 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
 
             if(optionRequested >= 0 && optionRequested < potentialEndLocations.size())
                 validOptionSelected = true;
+            else
+                std::cout << "That is not an option. Please enter one of the options." << std::endl;
         } while(!validOptionSelected);
         
         

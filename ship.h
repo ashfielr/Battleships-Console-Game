@@ -31,8 +31,12 @@ class Ship
         /* false if @gridLocation is not a location that the ship occupies */
         const bool isLocationOfShip(std::pair<int,int> gridLocation);
         
+        /* Returns a bool value - true if the location passed ( @gridLocation ) is a location destroyed already */
+        /* Returns a bool value - false if the location passed ( @gridLocation ) is not a location destroyed already */
+        const bool isLocationAlreadyDestroyed(std::pair<int,int> gridLocation);
+        
         /* Adds the @gridLocation locaiton to vector of locations of the ship which have been destroyed - @locationsDestroyed */
-        void addToLocationsDestroyed(std::pair<int,int> gridLocation);
+        void addToLocationsDestroyed(const std::pair<int,int>& gridLocation);
         
         // The number of cells the ship will occupy on the grid
         int size();
