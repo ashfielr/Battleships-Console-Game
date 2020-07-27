@@ -7,11 +7,11 @@
 #include "ship.h"
 #include <iostream>
 
-
-void passTurn()
+// Waits for player to enter character and press enter untill turn is passed on
+void waitForCharacterEntered(std::string message)
 {
     char letter2;
-    std::cout << "Enter a character then press enter to pass the turn on: ";
+    std::cout << message;
     std::cin  >> letter2;
     
     for(int i=0; i<10; i++)
@@ -19,7 +19,6 @@ void passTurn()
         std::cout << "\n\n\n\n\n\n\n\n" << std::endl;
     }
 }
-
 
 // Constructor
 PlayerVsPlayer::PlayerVsPlayer()
@@ -55,20 +54,20 @@ bool PlayerVsPlayer::updateGridsAndShips(const std::pair<int,int> &gridLocationT
     int col = std::get<0>(gridLocationToUpdate);
     
     if(shipWasHit)
-        player.getEnemyGrid().getGrid()[row][col] = 'H';
+        player.getEnemyGrid()->alterGridPositionChar('H',row,col);
     else
-        player.getEnemyGrid().getGrid()[row][col] = 'M';
+        player.getEnemyGrid()->alterGridPositionChar('M',row,col);
     
     // Updating the Enemy's grid for the shots they have recieved
     if(shipWasHit)
-        enemyPlayer.getOwnGrid().getGrid()[row][col] = 'H';
+        enemyPlayer.getOwnGrid()->alterGridPositionChar('H',row,col);
     else
-        enemyPlayer.getOwnGrid().getGrid()[row][col] = 'M';
+        enemyPlayer.getOwnGrid()->alterGridPositionChar('M',row,col);
     
     return shipWasHit;
 }
 
-void displayGrid(const Grid &gridToDisplay)
+void displayGrid(const std::shared_ptr<Grid> &gridToDisplay)
 {
     std::cout << "[   ] | [ 0 ] [ 1 ] [ 2 ] [ 3 ] [ 4 ] [ 5 ] [ 6 ] [ 7 ] [ 8 ] [ 9 ]" << std::endl;
     std::cout << "-------------------------------------------------------------------" << std::endl;
@@ -78,7 +77,7 @@ void displayGrid(const Grid &gridToDisplay)
         
         for(int col=0; col<10; col++)
         {
-            std::cout << " [ " << gridToDisplay.getGrid()[row][col] << " ]";
+            std::cout << " [ " << gridToDisplay->getGrid()[row][col] << " ]";
         }
         std::cout << std::endl;
     }
@@ -88,6 +87,13 @@ void displayGrid(const Grid &gridToDisplay)
 /* Returns - true if the player taken a shot that they have not already taken, otherwise it returns false */
 bool PlayerVsPlayer::takeTurnForAGivenBattleUserPlayer(BattleUserPlayer &player, int playerNumber, BattleUserPlayer &enemyPlayer)
 {
+    // Display the grids to the user
+    std::cout<< "Your grid: " << std::endl;
+    displayGrid(player.getOwnGrid());
+    std::cout<< "Your enemy status grid: " << std::endl;
+    displayGrid(player.getEnemyGrid());
+    
+    
     bool gameOver = false;
     std::pair<int,int> shotTakenP1 = player.takeTurn();
     
@@ -109,25 +115,28 @@ bool PlayerVsPlayer::takeTurnForAGivenBattleUserPlayer(BattleUserPlayer &player,
     else
         std::cout << "MISS" << std::endl;
     
+    std::cout<< "Your enemy status grid: " << std::endl;
+    displayGrid(player.getEnemyGrid());
+    
     return true;
 }
 
 /* Method which controls turns */
 void PlayerVsPlayer::play()
 {
-    std::cout << "PLAYER1: Your turn." << std::endl;
+    checkGameOverOrPassTurn("Enter a character and press enter to start your turn PLAYER1.");
+    
+    std::cout << "PLAYER1: Your turn." << std::endl;    
     while(!takeTurnForAGivenBattleUserPlayer(player1, 1, player2)); // If Player1 has successfully taken a valid shot
-    if(isGameOver())
-        std::cout << "You won!" << std:: endl;
-           
-    passTurn(); // Waits for player to enter a character then will continue
+    
+    checkGameOverOrPassTurn("Enter a character and press enter to pass your turn on.");
+    
+    checkGameOverOrPassTurn("Enter a character and press enter to start your turn PLAYER2.");
     
     std::cout << "PLAYER2: Your turn." << std::endl;
     while(!takeTurnForAGivenBattleUserPlayer(player2, 1, player1)); // If Player2 has successfully taken a valid shot
-    if(isGameOver())
-        std::cout << "You won!" << std:: endl;       
-        
-    passTurn(); // Waits for player to enter a character then will continue
+    
+    checkGameOverOrPassTurn("Enter a character and press enter to pass your turn on.");
 }
 
 void PlayerVsPlayer::placeShipsForAGivenBattleUserPlayer(BattleUserPlayer &player)
@@ -154,10 +163,22 @@ void PlayerVsPlayer::placeShips()
     std::cout << "Player1: you will now place your 5 ships." << std::endl;
     placeShipsForAGivenBattleUserPlayer(player1);
     
-    passTurn(); // Waits for player to enter a character then will continue
+    waitForCharacterEntered("Enter a character and press enter to pass your turn on."); // Waits for player to enter a character then will continue
     
     std::cout << "Player2: you will now place your 5 ships." << std::endl;
     placeShipsForAGivenBattleUserPlayer(player2);
     
-    passTurn(); // Waits for player to enter a character then will continue
+    waitForCharacterEntered("Enter a character and press enter to pass your turn on."); // Waits for player to enter a character then will continue
+}
+
+// Will check if the game has ended after a player's turn and wait until they have confirmed to move onto the next player
+void PlayerVsPlayer::checkGameOverOrPassTurn(std::string waitForCharMessage)
+{
+    if(isGameOver())
+    {
+        std::cout << "You won!" << std:: endl; 
+        return;
+    }
+           
+    waitForCharacterEntered(waitForCharMessage); // Waits for player to enter a character then will continue
 }

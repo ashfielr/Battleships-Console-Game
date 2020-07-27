@@ -8,14 +8,15 @@ using namespace std;
 /* Constructors */
 Player::Player()
 {
-    
+    playerGrid = std::make_shared<Grid>();
+    enemyGrid = std::make_shared<Grid>(); 
 }
 
 Player::Player(std::string _name)
 {
     name = _name;
-    playerGrid = Grid();
-    enemyGrid = Grid();      
+    playerGrid = std::make_shared<Grid>();
+    enemyGrid = std::make_shared<Grid>();      
 }
 
 /* Returns the player's name */
@@ -59,18 +60,18 @@ void Player::addShip(Ship shipToAdd)
     {
         int row = std::get<1>(shipToAdd.getShipLocations()[i]);
         int col = std::get<0>(shipToAdd.getShipLocations()[i]);
-        playerGrid.alterGridPositionChar('X', row, col);
+        playerGrid->alterGridPositionChar('X', row, col);
     }
 }
 
 /* Returns the player's grid */
-Grid Player::getOwnGrid() const
+std::shared_ptr<Grid>  Player::getOwnGrid() const
 {
     return playerGrid;
 }
 
 /* Returns the player's version of enemy grid */
-Grid Player::getEnemyGrid() const
+std::shared_ptr<Grid>  Player::getEnemyGrid() const
 {
     return enemyGrid;
 }

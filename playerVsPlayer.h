@@ -32,5 +32,8 @@ class PlayerVsPlayer : public Battle
         
         /* Method which controls placing ships at start for both players */
         void placeShips() override;
+        
+        /* Will check if the game has ended after a player's turn and wait until they have confirmed to move onto the next player */
+        void checkGameOverOrPassTurn(std::string waitForCharMessage);
 };
 #endif

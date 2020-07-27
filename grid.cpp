@@ -1,6 +1,11 @@
 #include <array>
 #include <memory>
 
+
+#include <iostream>
+
+
+
 // Header file
 #include "grid.h"
 
