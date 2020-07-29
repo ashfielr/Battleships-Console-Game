@@ -5,6 +5,9 @@
 #include "player.h"
 #include "battleUserPlayer.h"
 
+/* This class acts as an interface for different types of battles */
+/* I will implement a PlayerVsPlayer class which will be derived from the Battle class - meaning it will need to provide this functionality */
+/* The functionality declared in this "interface" class will ensure a battleships game can be played whether that be between humans, human and computer or computers */
 class Battle
 {  
     public:        

@@ -1,20 +1,17 @@
-using namespace std;
-
 //Ship library to be implemented
 #include "ship.h"
-#include <iostream>
 
 #include <utility> // To use std::get to get an element from a std::pair
 
 /* Constructor for Ship class */
 /* @_shipGridLocations is the vector of locations that make up the ship */
-Ship::Ship(vector<std::pair<int,int>> _shipGridLocations)
+Ship::Ship(std::vector<std::pair<int,int>> _shipGridLocations)
 {
     shipGridLocations = _shipGridLocations;
 }
 
 /* Takes a vector and a target grid location and checks if it is present in the vector */
-const bool Ship::isGridLocationInVector(vector<std::pair<int,int>> gridLocations, std::pair<int,int> targetLocation)
+const bool Ship::isGridLocationInVector(std::vector<std::pair<int,int>> gridLocations, std::pair<int,int> targetLocation)
 {
     for(unsigned i=0; i<gridLocations.size(); i++)
     {       
@@ -25,7 +22,7 @@ const bool Ship::isGridLocationInVector(vector<std::pair<int,int>> gridLocations
 }
 
 /* Returns the vector of locations that make up the ship */
-vector<std::pair<int,int>> Ship::getShipLocations()
+std::vector<std::pair<int,int>> Ship::getShipLocations()
 {
     return shipGridLocations;
 }

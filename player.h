@@ -4,11 +4,12 @@
 #include <string>
 #include <vector>
 
-#include "grid.h" // Grid library
-#include "ship.h" // Ship library
+#include "grid.h" // Grid class declaration
+#include "ship.h" // Ship class declaration
 
 class Player
 {
+    // To be inherited by child classes
     protected:        
         // The player name
         std::string name;

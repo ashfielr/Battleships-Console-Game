@@ -1,9 +1,5 @@
-using namespace std;
-
 #include "player.h"
 #include "battleUserPlayer.h"
-
-#include <iostream>
 
 /* Constructors */
 Player::Player()
@@ -20,7 +16,7 @@ Player::Player(std::string _name)
 }
 
 /* Returns the player's name */
-string Player::getName() const
+std::string Player::getName() const
 {
     return name;
 }
