@@ -9,11 +9,11 @@ int main()
     
     while(gameRunning)
     {
-        std::string menuMessage = "Welcome to Battleships!\nDo you wish to:\n0: Play\n1: Read the instructions\n2: Exit\n";
+        std::string menuMessage = "Welcome to Battleships!\nDo you wish to:\n1: Play\n2: Read the instructions\n3: Exit\n";
         int menuSelection = TextInterface::receiveIntInput(menuMessage); // Will request integer input for message
         
         bool validOptionSelected = true;
-        if(menuSelection != 0 && menuSelection != 1 && menuSelection != 2)
+        if(menuSelection != 1 && menuSelection != 2 && menuSelection != 3)
         {
             TextInterface::display("Please enter a valid option.");
             validOptionSelected = false;
@@ -24,7 +24,7 @@ int main()
             switch(menuSelection)
             {
                 // Play the game
-                case 0:
+                case 1:
                 {
                     PlayerVsPlayer battle;
                     battle.placeShips();
@@ -36,7 +36,7 @@ int main()
                 }
 
                 // Display the game instructions
-                case 1:
+                case 2:
                 {
                     std::string instructions = "INSTRUCTIONS\nThis is the section where the user will be told how to play the game...\n";
                     TextInterface::display(instructions);
@@ -44,7 +44,7 @@ int main()
                 }
 
                 // Exit the game
-                case 2: 
+                case 3: 
                 {
                     gameRunning = false;
                     break;
