@@ -20,6 +20,12 @@ file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/build/lib)
 SET(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/build/lib)
 
 add_library(
+	textInterface
+	textInterface.h
+	textInterface.cpp
+)
+
+add_library(
 	grid
 	grid.h
 	grid.cpp
@@ -58,7 +64,7 @@ target_link_libraries(player ship grid battleUserPlayer)
 target_link_libraries(battleUserPlayer player)
 target_link_libraries(playerVsPlayer player)
 
-target_link_libraries(Game playerVsPlayer)
+target_link_libraries(Game playerVsPlayer textInterface)
 
 ################################################################################################################################
 ######################### END - CMake adapted from codio tasks taken as an example to build my files #########################

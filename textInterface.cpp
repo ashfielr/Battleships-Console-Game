@@ -1,4 +1,4 @@
-include "textInterface.h"
+#include "textInterface.h"
 
 using namespace std;
 
@@ -26,13 +26,18 @@ void TextInterface::display(const std::string& text)
     cout << text << endl;
 }
 
+/* Show a number on the screen */
+void TextInterface::display(const int& number)
+{
+    cout << number << endl;
+}
+
 /* Ask user for input with a message */
 /* Returns the user's response as required datatype specified by @returnType parameter */
-template<typename TYPE>
-TYPE TextInterface::receiveInput(const std::string& inputMessage, TYPE paramOfTypeToReturn)
+int TextInterface::receiveIntInput(const std::string& inputMessage)
 {
     cout << inputMessage;
-    TYPE inputFromUser;
+    int inputFromUser;
     cin >> inputFromUser;
     return inputFromUser;
 }

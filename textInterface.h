@@ -18,11 +18,14 @@ class TextInterface
         /* @text is passed as a const reference to stop copying */
         static void display(const std::string& text);
         
+        /* Show integer on the screen */
+        /* @number is passed as a const reference to stop copying */
+        static void display(const int& number);
+        
         /* Ask user for input with a message */
         /* Returns the user's response */
         /* @inputMessage is passed as a const reference to stop copying */
-        template<typename TYPE>
-        static TYPE receiveInput(const std::string& inputMessage, TYPE paramOfTypeToReturn);
+        static int receiveIntInput(const std::string& inputMessage);
         
 };
 #endif
