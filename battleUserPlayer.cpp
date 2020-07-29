@@ -2,8 +2,6 @@
 #include "textInterface.h"
 #include "ship.h"
 
-#include <iostream>
-
 /* Constructor */
 BattleUserPlayer::BattleUserPlayer()
 {
@@ -18,14 +16,8 @@ std::pair<int,int> BattleUserPlayer::takeTurn()
     int columnEntered = TextInterface::receiveInput("Enter the column: ",int(1));
     int rowEntered = TextInterface::receiveInput("Enter the row: ",int(1));
     */
-    std::cout << "Please input the location you wish to fire at on your enemy's grid..." << std::endl;
-    std::cout << "Enter the column: " << std::endl;
-    int columnEntered;
-    std:: cin >> columnEntered;
-    
-    std::cout << "Enter the row: " << std::endl;
-    int rowEntered;
-    std::cin >> rowEntered;
+    int columnEntered = TextInterface::receiveIntInput("Please input the location you wish to fire at on your enemy's grid...\nEnter the column: ");    
+    int rowEntered = TextInterface::receiveIntInput("Enter the row: ");
     
     std::pair<int,int> gridLocationToFireAt = std::make_pair(columnEntered, rowEntered); // https://en.cppreference.com/w/cpp/utility/pair/make_pair
 
@@ -115,8 +107,7 @@ void addToEndingLocationsIfValid(std::vector<std::shared_ptr<Ship>> &_ships, std
             for(std::shared_ptr<Ship> ship : _ships)
             {
                 for(unsigned i=0; i<potentialShipLocations.size(); i++)
-                {
-                    // ##################################################################std::cout << "Ship conflicting: " << ship.isLocationOfShip(potentialShipLocations[i]) << std::endl;// ########################################
+                {                   
                     if(ship->isLocationOfShip(potentialShipLocations[i])) // Not a valid ending location so do not add
                         return;
                 }
@@ -134,8 +125,7 @@ void addToEndingLocationsIfValid(std::vector<std::shared_ptr<Ship>> &_ships, std
             for(std::shared_ptr<Ship> ship : _ships)
             {
                 for(unsigned i=0; i<potentialShipLocations.size(); i++)
-                {
-                    // ##################################################################std::cout << "Ship conflicting: " << ship.isLocationOfShip(potentialShipLocations[i]) << std::endl;
+                {                    
                     if(ship->isLocationOfShip(potentialShipLocations[i])) // Not a valid ending location so do not add
                         return;
                 }
@@ -163,17 +153,13 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
     int rowEntered;
     while(!validStartingLocationEntered)
     {
-        std::cout << "\n\nPlease input the starting location of your ship - Size: " << size << std::endl;
-        std::cout << "Enter the column: " << std::endl; 
-        std:: cin >> columnEntered;
-    
-        std::cout << "Enter the row: " << std::endl;
-        std::cin >> rowEntered;  
+        columnEntered = TextInterface::receiveIntInput("Please input the location you wish to fire at on your enemy's grid...\nEnter the column: ");  
+        rowEntered = TextInterface::receiveIntInput("Enter the row: ");
         
         if(columnEntered >= 0 & columnEntered <= 9 & rowEntered >= 0 & rowEntered <=9)
             validStartingLocationEntered = true;
         else
-            std::cout << "Invalid starting location." << std::endl;
+            TextInterface::display("Invalid starting location.");
     }
   
     
@@ -189,8 +175,7 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
         {
             // Check to the left
             case 0: 
-            {
-                //std::cout << "Check L" << std::endl; ##################################
+            {                
                 int endColumn = columnEntered - size + 1;
                 addToEndingLocationsIfValid(this->ships, startLocation, endColumn, 'C', potentialEndLocations, size);
                 break;                
@@ -198,8 +183,7 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
                 
             // Check to the right
             case 1: 
-            {
-                //std::cout << "Check R" << std::endl; //##################################
+            {               
                 int endColumn = columnEntered + size - 1;
                 addToEndingLocationsIfValid(this->ships, startLocation, endColumn, 'C', potentialEndLocations, size);               
                 break;
@@ -208,7 +192,6 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
             // Check to below
             case 2: 
             {
-                //std::cout << "Check D" << std::endl; ##################################
                 int endRow = rowEntered - size + 1;
                 addToEndingLocationsIfValid(this->ships, startLocation, endRow, 'R', potentialEndLocations, size);
                 break;
@@ -217,7 +200,6 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
             // Check to above
             case 3: 
             {
-                //std::cout << "Check U" << std::endl; //##################################
                 int endRow = rowEntered + size - 1;
                 addToEndingLocationsIfValid(this->ships, startLocation, endRow, 'R', potentialEndLocations, size);
                 break;
@@ -228,24 +210,27 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
     // Outputting the valid ending locations for the ship and asking the user to choose one of these for their ship
     if(potentialEndLocations.size() >= 1)
     {
+        int optionRequested; 
         bool validOptionSelected = false;
-        int optionRequested;
         do
         {
             // Asking user to choose their ending location of the ship
-            std::cout << "\nHere are the options for the end point of your ship:" << std::endl;
+            TextInterface::display("\nHere are the options for the end point of your ship:");
             for(unsigned i=0; i<potentialEndLocations.size(); i++)
             {
-                std::cout << i << ": (" << std::get<0>(potentialEndLocations[i]) << ", " << std::get<1>(potentialEndLocations[i]) << ")" << std::endl;
+                /// #### START - Found the std::to_string() from the forum page answer: https://stackoverflow.com/a/10516313 #######
+                std::string option = std::to_string(i) + ": (" + std::to_string(std::get<0>(potentialEndLocations[i])) + ", " + std::to_string(std::get<1>(potentialEndLocations[i])) + ")";
+                /// #### END - Found the std::to_string() from the forum page answer: https://stackoverflow.com/a/10516313 #######
+                
+                TextInterface::display(option);
             }
-            ////####int optionRequested = int(TextInterface::receiveInput("Enter the option you wish to choose: ", int(1)));
-            std::cout << "Enter the option you wish to choose: " << std::endl;
-            std::cin >> optionRequested;
+            
+            optionRequested = TextInterface::receiveIntInput("Enter the option you wish to choose: "); // Asking user to choose one
 
             if(optionRequested >= 0 && optionRequested < potentialEndLocations.size())
                 validOptionSelected = true;
             else
-                std::cout << "That is not an option. Please enter one of the options." << std::endl;
+                TextInterface::display("That is not an option - enter one of the options.");
         } while(!validOptionSelected);
         
         
@@ -255,7 +240,7 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
     }
     else
     {
-        std::cout << "Your starting location is not valid." << std::endl;
+        TextInterface::display("Your starting location is not valid.");
         shipLocationsToReturn = placeShip(size); // RECURSION - repeat until a valid starting location is entered and ending location chosen
     }
     

@@ -2,7 +2,6 @@
 #include "textInterface.h"
 
 #include <string>
-#include <iostream>
 
 int main()
 {  

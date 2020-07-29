@@ -11,8 +11,8 @@ class TextInterface
     
     public:    
         /* Show the a grid on the screen */
-        /* @grid is passed as a const reference to stop copying */
-        static void display(const Grid& grid);
+        /* @grid is passed as a smart pointer to save memory */
+        static void display(const std::shared_ptr<Grid> &gridToDisplay);
         
         /* Show text on the screen */
         /* @text is passed as a const reference to stop copying */
@@ -23,9 +23,14 @@ class TextInterface
         static void display(const int& number);
         
         /* Ask user for input with a message */
-        /* Returns the user's response */
+        /* Returns int - the user's response */
         /* @inputMessage is passed as a const reference to stop copying */
         static int receiveIntInput(const std::string& inputMessage);
+        
+        /* Ask user for input with a message */
+        /* Returns char - the user's response */
+        /* @inputMessage is passed as a const reference to stop copying */
+        static char receiveCharInput(const std::string& inputMessage);
         
 };
 #endif
