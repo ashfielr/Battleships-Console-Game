@@ -141,11 +141,6 @@ void addToEndingLocationsIfValid(std::vector<std::shared_ptr<Ship>> &_ships, std
 /* Deals with placing a ship on the player's grid */ 
 std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
 {
-    // Ask user for ship start location
-    /*TextInterface::display("Please input the starting location of your ship...");
-    int columnEntered = TextInterface::receiveInput("Enter the column: ",int(1)); // Input int from user
-    int rowEntered = TextInterface::receiveInput("Enter the row: ",int(1)); // Input int from user
-    */
     std::vector<std::pair<int,int>> shipLocationsToReturn;
     
     bool validStartingLocationEntered = false;
@@ -153,7 +148,7 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
     int rowEntered;
     while(!validStartingLocationEntered)
     {
-        columnEntered = TextInterface::receiveIntInput("Please input the location you wish to fire at on your enemy's grid...\nEnter the column: ");  
+        columnEntered = TextInterface::receiveIntInput("Please input the location you wish to be the start of your ship...\nEnter the column: ");  
         rowEntered = TextInterface::receiveIntInput("Enter the row: ");
         
         if(columnEntered >= 0 & columnEntered <= 9 & rowEntered >= 0 & rowEntered <=9)
@@ -218,9 +213,9 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
             TextInterface::display("\nHere are the options for the end point of your ship:");
             for(unsigned i=0; i<potentialEndLocations.size(); i++)
             {
-                /// #### START - Found the std::to_string() from the forum page answer: https://stackoverflow.com/a/10516313 #######
+                /// #### REFERENCE START - Found the std::to_string() from the forum page answer: https://stackoverflow.com/a/10516313 #######
                 std::string option = std::to_string(i) + ": (" + std::to_string(std::get<0>(potentialEndLocations[i])) + ", " + std::to_string(std::get<1>(potentialEndLocations[i])) + ")";
-                /// #### END - Found the std::to_string() from the forum page answer: https://stackoverflow.com/a/10516313 #######
+                /// #### REFERENCE END - Found the std::to_string() from the forum page answer: https://stackoverflow.com/a/10516313 #######
                 
                 TextInterface::display(option);
             }

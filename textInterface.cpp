@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include <limits>
+
 /* Show the a grid on the screen */
 void TextInterface::display(const std::shared_ptr<Grid> &gridToDisplay)
 {
@@ -35,9 +37,26 @@ void TextInterface::display(const int& number)
 /* Returns int - the user's response as required datatype specified by @returnType parameter */
 int TextInterface::receiveIntInput(const std::string& inputMessage)
 {
-    std::cout << inputMessage;
+    //##### REFERENCE START - Code written based on example code "Inputing numbers directly, version 1:" from http://augustcouncil.com/~tgibson/tutorial/iotips.html#directly   ###########################################
+    bool invalidInt = true;
     int inputFromUser;
-    std::cin >> inputFromUser;
+    do
+    {
+        invalidInt = false;
+        std::cout << inputMessage;
+        std::cin >> inputFromUser;
+        
+        if(!std::cin)
+        {
+            std::cout << "You did not enter a number.\n" << std::endl;
+            invalidInt = true;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+        }
+            
+    }while(invalidInt);
+    
+    //##### REFERENCE END - Code written based on example code "Inputing numbers directly, version 1:" from http://augustcouncil.com/~tgibson/tutorial/iotips.html#directly   ###########################################
     return inputFromUser;
 }
 
