@@ -2,7 +2,6 @@
 #include "battleUserPlayer.h"
 #include "ship.h"
 #include "textInterface.h"
-#include <iostream>
 
 // Waits for player to enter character and press enter untill turn is passed on
 void waitForCharacterEntered(std::string message)
