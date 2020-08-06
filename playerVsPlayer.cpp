@@ -107,7 +107,8 @@ void PlayerVsPlayer::play()
     TextInterface::display("PLAYER1: Your turn.");    
     while(!takeTurnForAGivenBattleUserPlayer(player1, 1, player2)); // If Player1 has successfully taken a valid shot
     
-    checkGameOverOrPassTurn("Enter a character and press enter to pass your turn on.");
+    if(checkGameOverOrPassTurn("Enter a character and press enter to pass your turn on."))
+        return;
     
     checkGameOverOrPassTurn("Enter a character and press enter to start your turn PLAYER2.");
     
@@ -150,13 +151,15 @@ void PlayerVsPlayer::placeShips()
 }
 
 // Will check if the game has ended after a player's turn and wait until they have confirmed to move onto the next player
-void PlayerVsPlayer::checkGameOverOrPassTurn(std::string waitForCharMessage)
+// Returns true if the game is over, returns false if the game is not over
+bool PlayerVsPlayer::checkGameOverOrPassTurn(std::string waitForCharMessage)
 {
     if(isGameOver())
     {
         TextInterface::display("You won!"); 
-        return;
+        return true;
     }
            
     waitForCharacterEntered(waitForCharMessage); // Waits for player to enter a character then will continue
+    return false;
 }

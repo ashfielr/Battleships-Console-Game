@@ -34,6 +34,7 @@ class PlayerVsPlayer : public Battle
         void placeShips() override;
         
         /* Will check if the game has ended after a player's turn and wait until they have confirmed to move onto the next player */
-        void checkGameOverOrPassTurn(std::string waitForCharMessage);
+        // Returns true if the game is over, returns false if the game is not over
+        bool checkGameOverOrPassTurn(std::string waitForCharMessage);
 };
 #endif

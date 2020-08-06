@@ -4,6 +4,7 @@
 #include "grid.h"
 
 /* Constructor for Grid class */
+/* Creates a 10x10 grid */
 Grid::Grid() : length(10), height(10)
 {
     for(int row = 0; row<10; row++)
@@ -29,7 +30,7 @@ void Grid::setGrid(std::array<std::array<char,10>,10> _grid)
     grid = _grid;
 }
 
-/* Allows a character to be changed in the @grid */
+/* Allows a character to be changed in the @grid at a specified location */
 void Grid::alterGridPositionChar(char character, int row, int col)
 {
     grid[row][col] = character;

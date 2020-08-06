@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <memory> // Using smart pointers - std::shared_ptr
 
 #include "grid.h" // Grid class declaration
 #include "ship.h" // Ship class declaration

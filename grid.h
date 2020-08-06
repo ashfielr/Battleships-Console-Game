@@ -1,17 +1,16 @@
 #ifndef GRID_H
 #define GRID_H
 
-#include <array>
-#include <memory>
+#include <array> // Using std::array here
 
 class Grid
 {
     private:
         // The number of columns
-        int length;
+        const int length;
 
         // The number of rows
-        int height;
+        const int height;
 
         // The grid of characters
         // 2D Array in structure of an array of rows where each row is an array of the cell in the row 

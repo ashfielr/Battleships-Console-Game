@@ -1,7 +1,7 @@
 #include "playerVsPlayer.h"
 #include "textInterface.h"
 
-#include <string>
+#include <string> // using std::string here
 
 int main()
 {  
@@ -26,9 +26,10 @@ int main()
                 // Play the game
                 case 1:
                 {
+                    // Initiate a PVP Battleships game
                     PlayerVsPlayer battle;
                     battle.placeShips();
-                    while(!battle.isGameOver())  
+                    while(!battle.isGameOver())  // Continue to give players turns until all of a player's ships are destroyed
                     {
                         battle.play();
                     }

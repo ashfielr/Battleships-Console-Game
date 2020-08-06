@@ -3,10 +3,12 @@
 
 #include "grid.h"
 
+#include <memory> // Using smart pointers - std::shared_ptr
+
 class TextInterface
 {
     private:         
-        // Constructor is private 
+        // Constructor is private
         TextInterface();        
     
     public:    
@@ -30,7 +32,6 @@ class TextInterface
         /* Ask user for input with a message */
         /* Returns char - the user's response */
         /* @inputMessage is passed as a const reference to stop copying */
-        static char receiveCharInput(const std::string& inputMessage);
-        
+        static char receiveCharInput(const std::string& inputMessage);      
 };
-#endif
+#endif   

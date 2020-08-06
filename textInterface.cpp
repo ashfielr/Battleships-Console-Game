@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include <limits>
+#include <limits> // FROM EXAMPLE CODE  - "Inputing numbers directly, version 1:" from http://augustcouncil.com/~tgibson/tutorial/iotips.html#directly   ###########################################
 
 /* Show the a grid on the screen */
 void TextInterface::display(const std::shared_ptr<Grid> &gridToDisplay)

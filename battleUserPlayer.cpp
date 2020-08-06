@@ -9,23 +9,20 @@ BattleUserPlayer::BattleUserPlayer()
 }
 
 /* Request the user for a location that they want to use their turn to fire at */
-/* Returns the grid location the user chose to fir e at */
+/* Returns the grid location the user chose to fire at */
 std::pair<int,int> BattleUserPlayer::takeTurn()
 {
-    /*TextInterface::display("Please input the location you wish to fire at on your enemy's grid...");
-    int columnEntered = TextInterface::receiveInput("Enter the column: ",int(1));
-    int rowEntered = TextInterface::receiveInput("Enter the row: ",int(1));
-    */
     int columnEntered = TextInterface::receiveIntInput("Please input the location you wish to fire at on your enemy's grid...\nEnter the column: ");    
     int rowEntered = TextInterface::receiveIntInput("Enter the row: ");
     
-    std::pair<int,int> gridLocationToFireAt = std::make_pair(columnEntered, rowEntered); // https://en.cppreference.com/w/cpp/utility/pair/make_pair
+    std::pair<int,int> gridLocationToFireAt = std::make_pair(columnEntered, rowEntered); // Using std::pair data structure https://en.cppreference.com/w/cpp/utility/pair/make_pair
 
     return gridLocationToFireAt;
 }
 
 /* Start @startLocation and end @endLocation locations are passed along with the size of the ship */
 /* The function returns a vector of the ship locations that make up the ship that spans from the start location to the end location provided */
+/* Note: this is a function used to break down tasks (it is not a method of the class) */
 std::vector<std::pair<int,int>> getShipLocations(const std::pair<int,int>& startLocation, const std::pair<int,int>& endLocation, int size)
 {
     std::vector<std::pair<int,int>> potentialShipLocations;
@@ -37,7 +34,7 @@ std::vector<std::pair<int,int>> getShipLocations(const std::pair<int,int>& start
     
     if(startCol == endCol)
     {
-        if(startRow - endRow < 0) // The ship is place vertically down from start location
+        if(startRow - endRow < 0) // The ship is placed vertically down from start location
         {
             //Adding the ship locations to vector
             potentialShipLocations.emplace_back(startLocation);
@@ -92,7 +89,8 @@ std::vector<std::pair<int,int>> getShipLocations(const std::pair<int,int>& start
     return potentialShipLocations;
 }
 
-// FRIEND function of Player class
+/* This function will add a grid location for an end point of a ship to a collection of grid locations if it is a valid ending point for a ship with the @startLocation provided */
+/* Note: this is a function used to break down tasks (it is not a method of the class) */
 void addToEndingLocationsIfValid(std::vector<std::shared_ptr<Ship>> &_ships, std::pair<int,int> &startLocation, int valueChanged, char columnOrRowChanged, std::vector<std::pair<int,int>> &availableEndLocations, int size)
 {
     if(valueChanged >= 0 && valueChanged <= 9)
@@ -213,9 +211,9 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
             TextInterface::display("\nHere are the options for the end point of your ship:");
             for(unsigned i=0; i<potentialEndLocations.size(); i++)
             {
-                /// #### REFERENCE START - Found the std::to_string() from the forum page answer: https://stackoverflow.com/a/10516313 #######
+                /// #### REFERENCE START - Found std::to_string() from the forum page answer: https://stackoverflow.com/a/10516313 #######
                 std::string option = std::to_string(i) + ": (" + std::to_string(std::get<0>(potentialEndLocations[i])) + ", " + std::to_string(std::get<1>(potentialEndLocations[i])) + ")";
-                /// #### REFERENCE END - Found the std::to_string() from the forum page answer: https://stackoverflow.com/a/10516313 #######
+                /// #### REFERENCE END - Found std::to_string() from the forum page answer: https://stackoverflow.com/a/10516313 #######
                 
                 TextInterface::display(option);
             }
@@ -236,7 +234,7 @@ std::vector<std::pair<int,int>> BattleUserPlayer::placeShip(int size)
     else
     {
         TextInterface::display("Your starting location is not valid.");
-        shipLocationsToReturn = placeShip(size); // RECURSION - repeat until a valid starting location is entered and ending location chosen
+        shipLocationsToReturn = placeShip(size); // RECURSION - repeat method until a valid starting location is entered and ending location chosen
     }
     
     return shipLocationsToReturn;
