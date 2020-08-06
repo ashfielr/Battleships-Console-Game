@@ -48,15 +48,16 @@ bool PlayerVsPlayer::updateGridsAndShips(const std::pair<int,int> &gridLocationT
     int col = std::get<0>(gridLocationToUpdate);
     
     if(shipWasHit)
-        player.getEnemyGrid()->alterGridPositionChar('H',row,col);
+    {
+        player.getEnemyGrid()->alterGridPositionChar('H',row,col); // Players status grid of enemy's grid
+        enemyPlayer.getOwnGrid()->alterGridPositionChar('H',row,col); // Enemy's own grid
+    }
+        
     else
-        player.getEnemyGrid()->alterGridPositionChar('M',row,col);
-    
-    // Updating the Enemy's grid for the shots they have recieved
-    if(shipWasHit)
-        enemyPlayer.getOwnGrid()->alterGridPositionChar('H',row,col);
-    else
-        enemyPlayer.getOwnGrid()->alterGridPositionChar('M',row,col);
+    {
+        player.getEnemyGrid()->alterGridPositionChar('M',row,col); // Players status grid of enemy's grid
+        enemyPlayer.getOwnGrid()->alterGridPositionChar('M',row,col); // Enemy's own grid
+    }
     
     return shipWasHit;
 }
