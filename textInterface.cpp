@@ -1,10 +1,10 @@
 #include "textInterface.h"
 
-#include <iostream>
+#include <iostream> // Using std::cout & std::cin & std::endl ... etc
 
-#include <limits> // FROM EXAMPLE CODE  - "Inputing numbers directly, version 1:" from http://augustcouncil.com/~tgibson/tutorial/iotips.html#directly   ###########################################
+#include <limits> // REFERENCE - FROM EXAMPLE CODE  - "Inputing numbers directly, version 1:" from http://augustcouncil.com/~tgibson/tutorial/iotips.html#directly   ###########################################
 
-/* Show the a grid on the screen */
+/* Show a grid as text on the screen */
 void TextInterface::display(const std::shared_ptr<Grid> &gridToDisplay)
 {
     std::cout << "[   ] | [ 0 ] [ 1 ] [ 2 ] [ 3 ] [ 4 ] [ 5 ] [ 6 ] [ 7 ] [ 8 ] [ 9 ]" << std::endl;

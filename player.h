@@ -1,8 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <string>
-#include <vector>
+#include <string> // Using std::string here
+#include <vector> //Using std::vector here
 #include <memory> // Using smart pointers - std::shared_ptr
 
 #include "grid.h" // Grid class declaration
@@ -21,7 +21,7 @@ class Player
         // The player's own grid on which their ships are located and status from enemy shots are displayed
         std::shared_ptr<Grid> playerGrid;
         
-        // The enemy player's grid which does not show the ship locations but shows the status from the players shots
+        // The enemy player's grid which does not show their ship locations but shows the status from the player's own shots
         std::shared_ptr<Grid> enemyGrid;
         
         // Collection of the locations on the grid the player has already used a turn to shoot at
@@ -47,10 +47,10 @@ class Player
         /* Adds a ship to the players set of ships */
         void addShip(Ship shipToAdd);
         
-        /* Returns the player's grid */
+        /* Returns a smart pointer to the player's grid */
         std::shared_ptr<Grid> getOwnGrid() const;
         
-        /* Returns the player's version of enemy grid */
+        /* Returns a smart pointer to the the player's version of enemy grid */
         std::shared_ptr<Grid>  getEnemyGrid() const;
         
         /* Returns the grid locations the player has shot at */

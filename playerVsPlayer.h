@@ -3,17 +3,18 @@
 
 #include "battle.h"
 
-class PlayerVsPlayer : public Battle
+/* Class which provides implementation of the  "interface" Battle class for a Player vs Player game of Battleships */
+class PlayerVsPlayer : public Battle // Must implement the pure virtual functions in Battle class
 {  
     private:
         BattleUserPlayer player1;
         BattleUserPlayer player2;
 
     public:  
-        // Constructor
+        /* Constructor */
         PlayerVsPlayer();
     
-        // Return bool whether game is finished
+        /* Return bool whether game is finished */
         bool isGameOver() override;
         
         /* Method to update the Grids and Ships after a location has been choosen for a player's turn */
@@ -21,7 +22,7 @@ class PlayerVsPlayer : public Battle
         bool updateGridsAndShips(const std::pair<int,int> &gridLocationToUpdate, const Player& player, const Player& enemyPlayer) override;     
         
         /* Method deals with an individual player's turn */
-        /* Returns - true if the player has won on their turn, otherwise it returns false */
+        /* Returns - true if the player has won during their turn, otherwise it returns false */
         bool takeTurnForAGivenBattleUserPlayer(BattleUserPlayer &player, int playerNumber, BattleUserPlayer &enemyPlayer);
         
         /* Method which controls turns */

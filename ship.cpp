@@ -30,7 +30,7 @@ std::vector<std::pair<int,int>> Ship::getShipLocations()
 /* Returns a true bool false if the ship has been destroyed otherwise returns false */
 bool Ship::isDestroyed()
 {
-    if(locationsDestroyed.size() == (unsigned)this->size()) // Had warning with comparison between unsigned and signed so this page helped me fix the warning - https://stackoverflow.com/questions/3660901/a-warning-comparison-between-signed-and-unsigned-integer-expressions
+    if(locationsDestroyed.size() == (unsigned)this->size()) // REFERENCE - Had warning with comparison between unsigned and signed so this page helped me remove the warning - https://stackoverflow.com/questions/3660901/a-warning-comparison-between-signed-and-unsigned-integer-expressions
     {
         for(int i=0; i<this->size(); i++)
         {
@@ -58,7 +58,7 @@ const bool Ship::isLocationAlreadyDestroyed(std::pair<int,int> gridLocation)
 }
 
 /* When a ship location has been fired it is destroyed */
-/* This method added the location that has been destroyed to the list of destroyed locations */
+/* This method adds the location that has been destroyed to the list of destroyed locations */
 void Ship::addToLocationsDestroyed(const std::pair<int,int> &gridLocationHit)
 {
     locationsDestroyed.emplace_back(gridLocationHit);

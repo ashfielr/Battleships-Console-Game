@@ -5,6 +5,8 @@
 
 #include <memory> // Using smart pointers - std::shared_ptr
 
+/* This is a "static" class - no instances can be created */
+/* It provides functionality dealing with inputting and outputting text from/to the console */
 class TextInterface
 {
     private:         

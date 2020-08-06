@@ -3,7 +3,7 @@
 #include "ship.h"
 #include "textInterface.h"
 
-// Waits for player to enter character and press enter untill turn is passed on
+/* Waits for player to enter character and press enter untill turn is passed on */
 void waitForCharacterEntered(std::string message)
 {
     TextInterface::receiveCharInput(message);
@@ -14,13 +14,13 @@ void waitForCharacterEntered(std::string message)
     }
 }
 
-// Constructor
+/* Constructor */
 PlayerVsPlayer::PlayerVsPlayer()
 {
     
 }
 
-// Return bool whether game is finished
+/* Return bool whether game is finished or not */
 bool PlayerVsPlayer::isGameOver()
 {
     return (player2.isAllShipsDestroyed() || player1.isAllShipsDestroyed());
@@ -37,7 +37,7 @@ bool PlayerVsPlayer::updateGridsAndShips(const std::pair<int,int> &gridLocationT
     {
         if(enemyShip->isLocationOfShip(gridLocationToUpdate) && !enemyShip->isLocationAlreadyDestroyed(gridLocationToUpdate)) // If the player hit a ship
         {            
-            enemyShip->addToLocationsDestroyed(gridLocationToUpdate); // Add to locaitons destroyed on the ship instance  
+            enemyShip->addToLocationsDestroyed(gridLocationToUpdate); // Add to locations destroyed on the ship instance  
             shipWasHit = true;
             if(enemyShip->isDestroyed())
                 TextInterface::display("Ship destroyed!");

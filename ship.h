@@ -3,13 +3,14 @@
 
 #include <vector>
 
+/* The Ship class encapsulates all of the data and functionality invovled around a Ship on a Player's grid */
 class Ship
 {
     private:        
-        // The cells which the ship is placed on, on the grid
+        /* The cells which the ship is placed on, on the grid */
         std::vector<std::pair<int,int>> shipGridLocations;
         
-        // The cells which have been shot at (destroyed)
+        /* The cells which have been shot at (destroyed) */
         std::vector<std::pair<int,int>> locationsDestroyed;
         
         /* Method which will be used to determine if a location on a grid is included in a vector of locations */

@@ -14,10 +14,11 @@ class Grid
 
         // The grid of characters
         // 2D Array in structure of an array of rows where each row is an array of the cell in the row 
-        // [[Row1], [Row2], etc]
+        // [[Row1], [Row2], ... etc]
         std::array<std::array<char,10>,10> grid;
     
     public:
+        /* Constructor */
         Grid();
 
         /* Getter for @grid */
@@ -26,7 +27,7 @@ class Grid
         /* Setter for @grid */
         void setGrid(std::array<std::array<char,10>,10> grid);
         
-        /* Allows a character to be changed in the @grid */
+        /* Allows a character to be changed in the @grid at a specified location */
         void alterGridPositionChar(char character, int row, int col);
 };
 #endif

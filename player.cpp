@@ -39,7 +39,7 @@ bool Player::isAllShipsDestroyed() const
     return allShipsDestroyed;
 }
 
-/* Returns the player's ships */
+/* Returns the player's ships - vector of smart pointers to player's ships */
 std::vector<std::shared_ptr<Ship>> Player::getShips() const
 {
     return ships;
@@ -49,14 +49,14 @@ std::vector<std::shared_ptr<Ship>> Player::getShips() const
 void Player::addShip(Ship shipToAdd)
 {
     std::shared_ptr<Ship> shipToAddPtr = std::make_shared<Ship>(shipToAdd);
-    ships.emplace_back(shipToAddPtr); // Adding ship objects
+    ships.emplace_back(shipToAddPtr); // Adding ship object smart pointer
     
     // Adding the ship to player's grid (each location marked with 'X' character)
     for(unsigned i=0; i<shipToAdd.getShipLocations().size(); i++)
     {
         int row = std::get<1>(shipToAdd.getShipLocations()[i]);
         int col = std::get<0>(shipToAdd.getShipLocations()[i]);
-        playerGrid->alterGridPositionChar('X', row, col);
+        playerGrid->alterGridPositionChar('X', row, col); // Adding the 'X' to the grid locations of the ship
     }
 }
 
